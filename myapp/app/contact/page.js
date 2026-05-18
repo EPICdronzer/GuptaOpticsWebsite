@@ -89,7 +89,7 @@ const ContactPage = () => {
             <img src="/prod-2.png" className="absolute bottom-1/4 right-4 xl:right-20 w-20 md:w-32 lg:w-40 xl:w-48 aspect-square object-cover shadow-2xl transition-transform duration-700 group-hover:translate-x-4 translate-y-10" alt="Social 5" />
             <img src="/prod-3.png" className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 md:w-28 lg:w-32 xl:w-40 aspect-square object-cover shadow-2xl transition-transform duration-700 group-hover:translate-y-4" alt="Social 6" />
 
-            <div className="relative z-10 bg-white/80 xl:bg-transparent backdrop-blur-sm xl:backdrop-blur-none p-6 md:p-10 xl:p-0 rounded-3xl xl:rounded-none">
+            <div className="relative z-10 bg-white/80 xl:bg-transparent backdrop-blur-sm xl:backdrop-blur-none p-6 md:p-10 xl:p-0 rounded-none">
               <h2 className="text-3xl md:text-5xl lg:text-5xl xl:text-6xl font-black uppercase tracking-tighter leading-none max-w-3xl text-black xl:text-inherit">
                 FOLLOW US<br />
                 <span className="text-black/60 xl:text-[#999999]">FOR NEW COLLECTIONS</span><br />

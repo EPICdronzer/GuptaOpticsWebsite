@@ -51,8 +51,12 @@ const Categories = () => {
             </p>
             {/* Mobile Controls */}
             <div className="flex gap-4 md:hidden">
-              <button onClick={prevSlide} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center">←</button>
-              <button onClick={nextSlide} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center">→</button>
+              <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-black">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 19l-7-7 7-7" /></svg>
+              </button>
+              <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-black">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7" /></svg>
+              </button>
             </div>
           </div>
           

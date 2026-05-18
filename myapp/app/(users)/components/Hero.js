@@ -62,8 +62,8 @@ Preferred Date: ${formattedDate}`;
           </div>
           
           {/* Booking Form (Replacing the Categories List) */}
-          <div className="mt-4 md:mt-0 w-full md:w-[320px] bg-black/40 backdrop-blur-md border border-white/10 p-8 rounded-2xl shadow-2xl">
-            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400 mb-6">Book An Eye Test</h3>
+          <div className="mt-2 md:mt-0 w-full md:w-[320px] bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl">
+            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400 mb-4 md:mb-6">Book An Eye Test</h3>
             
             <form onSubmit={handleBooking} className="flex flex-col gap-4 text-left">
               <div className="flex flex-col gap-1">
@@ -74,7 +74,7 @@ Preferred Date: ${formattedDate}`;
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="bg-white/5 border border-white/20 px-4 py-3 rounded-lg text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-yellow-400 transition-colors placeholder:text-white/20"
+                  className="bg-white/5 border border-white/20 px-4 py-3 rounded-lg text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-yellow-400 transition-colors placeholder:text-white/40 text-white w-full"
                 />
               </div>
 
@@ -86,7 +86,7 @@ Preferred Date: ${formattedDate}`;
                   min={minDate}
                   value={formData.date}
                   onChange={(e) => setFormData({...formData, date: e.target.value})}
-                  className="bg-white/5 border border-white/20 px-4 py-3 rounded-lg text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-yellow-400 transition-colors"
+                  className="bg-white/5 border border-white/20 px-4 py-3 rounded-lg text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-yellow-400 transition-colors text-white w-full min-h-[42px]"
                   style={{ colorScheme: 'dark' }}
                 />
               </div>
@@ -102,9 +102,9 @@ Preferred Date: ${formattedDate}`;
         </div>
 
         {/* Center/Bottom Content */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-12 pb-12 text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-12 pb-6 md:pb-12 text-center md:text-left">
           {/* CTA Buttons */}
-          <div className="flex flex-col md:flex-row items-center gap-3 order-1 md:order-2 w-full md:w-auto">
+          <div className="flex flex-col md:flex-row items-center gap-3 order-1 md:order-2 w-full md:w-auto mt-4 md:mt-0">
             {/* Locate Us Button */}
             <a 
               href={siteConfig.address.googleMaps} 
