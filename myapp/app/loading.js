@@ -16,7 +16,7 @@ export default function Loading() {
       {/* Brand Label */}
       <div className="flex flex-col items-center">
         <h2 className="text-xl font-black uppercase tracking-[0.5em] text-white animate-pulse">
-          EYECONIC
+          Optical GALAXY
         </h2>
         <div className="w-12 h-[1px] bg-yellow-400 mt-2 animate-[scaleX_2s_ease-in-out_infinite]"></div>
       </div>

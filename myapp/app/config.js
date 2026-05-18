@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: "Eyeconic",
-  fullName: "Gupta Optics",
+  name: "Optical Galaxy",
+  fullName: "Optical Galaxy",
   contact: {
-    email: "info@guptaoptics.com",
+    email: "info@Opticalgalaxy.com",
     phone: "+91 98765 43210",
-    whatsapp: "919876543210", // Format: countrycodeNumber without +
+    whatsapp: "9876543210", // Format: countrycodeNumber without +
   },
   address: {
     street: "123 Vision Avenue",
@@ -16,10 +16,10 @@ export const siteConfig = {
     googleMaps: "https://maps.app.goo.gl/your-location-link"
   },
   social: {
-    instagram: "https://instagram.com/eyeconic",
-    facebook: "https://facebook.com/eyeconic",
-    twitter: "https://twitter.com/eyeconic",
-    linkedin: "https://linkedin.com/company/eyeconic",
+    instagram: "https://instagram.com/Opticalgalaxy",
+    facebook: "https://facebook.com/Opticalgalaxy",
+    twitter: "https://twitter.com/Opticalgalaxy",
+    linkedin: "https://linkedin.com/company/Opticalgalaxy",
   },
   links: {
     shop: "/shop",
@@ -29,16 +29,16 @@ export const siteConfig = {
   },
   footer: {
     tagline: "Premium Eyewear for the Modern Individual.",
-    copyright: "© 2025 Eyeconic. All rights reserved.",
+    copyright: "© 2025 Optical Galaxy. All rights reserved.",
   },
   // Backend Configuration
   backend: {
-    mongodbUri: "mongodb://localhost:27017/eyeconic", // Local MongoDB for now
+    mongodbUri: "mongodb://localhost:27017/Opticalgalaxy", // Local MongoDB for now
     cloudinary: {
       cloudName: "your_cloud_name",
       apiKey: "your_api_key",
       apiSecret: "your_api_secret",
-      uploadPreset: "eyeconic_products"
+      uploadPreset: "Opticalgalaxy_products"
     }
   }
 };

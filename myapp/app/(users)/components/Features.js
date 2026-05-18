@@ -1,10 +1,34 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const Features = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const cardsRef = useRef(null);
+
+  // GSAP ScrollTrigger
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(headingRef.current?.children ?? [],
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: { trigger: headingRef.current, start: 'top 85%' } }
+      );
+      gsap.fromTo(cardsRef.current?.children ?? [],
+        { y: 60, opacity: 0, scale: 0.97 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.9, stagger: 0.18, ease: 'power3.out',
+          scrollTrigger: { trigger: cardsRef.current, start: 'top 85%' } }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   const cards = [
     {
@@ -39,10 +63,10 @@ const Features = () => {
   const prevSlide = () => setActiveIndex((prev) => (prev - 1 + cards.length) % cards.length);
 
   return (
-    <section className="w-full bg-[#ffcc00] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#ffcc00] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Top Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12 md:mb-20">
+        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12 md:mb-20">
           <div className="flex flex-col gap-6 w-full md:w-auto items-center md:items-start">
             <div className="w-48 h-32 overflow-hidden rounded-sm bg-black/5">
               <img src="/clarity-macro.png" alt="Macro lens detail" className="w-full h-full object-cover mix-blend-multiply opacity-80" />
@@ -118,7 +142,7 @@ const Features = () => {
 
           {/* Bottom Feature Cards */}
           <div className="relative w-full mt-16 md:mt-24">
-            <div className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
+            <div ref={cardsRef} className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
                  style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
               {cards.map((card, i) => (
                 <div key={i} className="min-w-full md:min-w-0 p-10 border border-black/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">

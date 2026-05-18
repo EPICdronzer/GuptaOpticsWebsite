@@ -1,5 +1,9 @@
 'use client';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const ContactCTA = () => {
   const badges = [
@@ -8,9 +12,19 @@ const ContactCTA = () => {
     { name: 'PREMIUM MATERIALS' },
     { name: '100% UV PROTECTION' },
   ];
-
-  // Double the badges for seamless infinite loop
   const scrollingBadges = [...badges, ...badges, ...badges];
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(contentRef.current?.children ?? [],
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.1, stagger: 0.2, ease: 'power3.out',
+          scrollTrigger: { trigger: contentRef.current, start: 'top 80%' } }
+      );
+    }, contentRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section className="relative w-full min-h-[70vh] flex flex-col justify-between overflow-hidden">
@@ -24,7 +38,7 @@ const ContactCTA = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-8 py-24">
+      <div ref={contentRef} className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-8 py-24">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-none tracking-tighter uppercase max-w-4xl">
           REACH OUT <span className="text-yellow-400">TODAY</span> AND<br />
           LET&apos;S START THE CONVERSATION

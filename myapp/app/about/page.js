@@ -1,20 +1,57 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../(users)/components/Navbar';
 import Footer from '../(users)/components/Footer';
 
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+
 const AboutPage = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const heroTitleRef = useRef(null);
+  const statsRef = useRef(null);
+  const brandRef = useRef(null);
+  const visionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero title staggered
+      gsap.fromTo(heroTitleRef.current?.children ?? [],
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.1, stagger: 0.15, ease: 'power3.out', delay: 0.3 }
+      );
+      // Stats counter-like entrance
+      gsap.fromTo(statsRef.current?.children ?? [],
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'back.out(1.7)',
+          scrollTrigger: { trigger: statsRef.current, start: 'top 85%' } }
+      );
+      // Brand section
+      gsap.fromTo(brandRef.current,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: brandRef.current, start: 'top 85%' } }
+      );
+      // Vision section
+      gsap.fromTo(visionRef.current?.children ?? [],
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out',
+          scrollTrigger: { trigger: visionRef.current, start: 'top 85%' } }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
 
   const testimonials = [
     {
-      text: "I bought a pair for vacation, and now I wear them everywhere. People keep asking me where I got them —Eyeconic is officially my style secret.",
+      text: "I bought a pair for vacation, and now I wear them everywhere. People keep asking me where I got them —Optical Galaxy is officially my style secret.",
       author: "SOPHIA T.",
       date: "4 days ago",
       img: "/prod-1.png"
     },
     {
-      text: "The craftsmanship is unmatched. I've tried many luxury brands, but Eyeconic's attention to detail and comfort is on another level.",
+      text: "The craftsmanship is unmatched. I've tried many luxury brands, but Optical Galaxy's attention to detail and comfort is on another level.",
       author: "MARCUS R.",
       date: "1 week ago",
       img: "/prod-2.png"
@@ -48,7 +85,7 @@ const AboutPage = () => {
       {/* 1. About Hero Section */}
       <section className="pt-32 md:pt-48 pb-16 px-12 md:px-32 lg:px-48">
         <div className="max-w-[1400px] mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start mb-16 gap-8">
+          <div ref={heroTitleRef} className="flex flex-col md:flex-row justify-between items-start mb-16 gap-8">
             <h1 className="text-5xl md:text-[7rem] font-black tracking-tighter leading-none uppercase">
               ABOUT <span className="text-[#999999]">US</span>
             </h1>
@@ -119,10 +156,10 @@ const AboutPage = () => {
       {/* 3. Card Stacking Section */}
       <section className="bg-[#F9F9F7] px-12 md:px-32 lg:px-48 py-24">
         <div className="max-w-[1400px] mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start mb-20 gap-10">
+          <div ref={brandRef} className="flex flex-col md:flex-row justify-between items-start mb-20 gap-10">
             <div className="max-w-xs">
               <p className="text-sm font-medium text-[#777777] leading-relaxed italic">
-                // Every pair of Eyeconic sunglasses is crafted with care to balance timeless style
+                // Every pair of Optical Galaxy sunglasses is crafted with care to balance timeless style
               </p>
             </div>
             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-right leading-[0.85]">
@@ -154,7 +191,7 @@ const AboutPage = () => {
       {/* 4. Stats & Testimonial Section (Yellow) */}
       <section className="py-16 md:py-24 px-12 md:px-32 lg:px-48 bg-yellow-400">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-24">
+          <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-24">
             {[
               { val: '10K+', label: 'Happy Customers Worldwide' },
               { val: '99%', label: 'UV Protection Guarantee' },
@@ -225,7 +262,7 @@ const AboutPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24">
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight">OUR VISION</h2>
             <p className="text-[#777777] text-sm md:text-base leading-relaxed max-w-2xl italic">
-              // We're not just creating eyewear—we're creating a movement. At Eyeconic, we envision a world where eyewear is more than an accessory.
+              // We're not just creating eyewear—we're creating a movement. At Optical Galaxy, we envision a world where eyewear is more than an accessory.
             </p>
           </div>
 
@@ -239,7 +276,7 @@ const AboutPage = () => {
               <div className="flex flex-col gap-4">
                 <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter">CRAFTSMANSHIP THAT MATTERS</h3>
                 <p className="text-gray-500 text-sm md:text-base leading-relaxed group-hover:text-white/70 transition-colors">
-                  Behind every pair of Eyeconic sunglasses is a story of precision and passion. From the careful selection of durable materials to the hand-finished details.
+                  Behind every pair of Optical Galaxy sunglasses is a story of precision and passion. From the careful selection of durable materials to the hand-finished details.
                 </p>
               </div>
             </div>
@@ -253,7 +290,7 @@ const AboutPage = () => {
               <div className="flex flex-col gap-4">
                 <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter">SUSTAINABILITY PROMISE</h3>
                 <p className="text-gray-300 text-sm md:text-base leading-relaxed opacity-80 group-hover:text-black group-hover:opacity-100 transition-all duration-500">
-                  Protecting your vision also means protecting the planet. That's why Eyeconic uses eco-conscious packaging and responsibly sourced materials.
+                  Protecting your vision also means protecting the planet. That's why Optical Galaxy uses eco-conscious packaging and responsibly sourced materials.
                 </p>
               </div>
             </div>

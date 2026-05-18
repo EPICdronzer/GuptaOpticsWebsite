@@ -1,11 +1,44 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { siteConfig } from '../../config';
 import { createAppointment } from '../../../actions/clientActions';
 
 const Hero = () => {
   const [formData, setFormData] = useState({ name: '', date: '' });
   const [minDate, setMinDate] = useState('');
+  const heroRef = useRef(null);
+  const titleRef = useRef(null);
+  const formRef = useRef(null);
+  const bottomRef = useRef(null);
+  const scrollBtnRef = useRef(null);
+
+  // GSAP page load animation
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.fromTo(titleRef.current,
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.1 }
+      )
+      .fromTo(formRef.current,
+        { x: 60, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.9 },
+        '-=0.6'
+      )
+      .fromTo(bottomRef.current?.children ?? [],
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.2 },
+        '-=0.4'
+      )
+      .fromTo(scrollBtnRef.current,
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.6 },
+        '-=0.3'
+      );
+    }, heroRef);
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     // Set minimum date to today for the calendar picker
@@ -35,7 +68,7 @@ const Hero = () => {
       day: 'numeric'
     });
 
-    const message = `Hello Eyeconic! I would like to book an eye test appointment.
+    const message = `Hello Optical Galaxy! I would like to book an eye test appointment.
     
 Name: ${formData.name}
 Preferred Date: ${formattedDate}`;
@@ -45,7 +78,7 @@ Preferred Date: ${formattedDate}`;
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black">
+    <section ref={heroRef} className="relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black">
       {/* Sticky Background Image */}
       <div 
         className="absolute inset-0 z-0 bg-[url('/hero-bg.png')] bg-cover bg-center bg-fixed"
@@ -55,14 +88,14 @@ Preferred Date: ${formattedDate}`;
       <div className="relative z-10 flex flex-col justify-between h-full pt-12 md:pt-32">
         {/* Top Section: Title and Form */}
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left">
-          <div className="title-container max-w-2xl">
+          <div ref={titleRef} className="title-container max-w-2xl">
             <h1 className="text-[3.2rem] md:text-[6rem] lg:text-[7.5rem] font-black leading-[0.85] tracking-tighter uppercase mb-6 md:mb-0">
               SHADES<br />OF STYLE
             </h1>
           </div>
           
           {/* Booking Form (Replacing the Categories List) */}
-          <div className="mt-2 md:mt-0 w-full md:w-[320px] bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl">
+          <div ref={formRef} className="mt-2 md:mt-0 w-full md:w-[320px] bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl">
             <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400 mb-4 md:mb-6">Book An Eye Test</h3>
             
             <form onSubmit={handleBooking} className="flex flex-col gap-4 text-left">
@@ -102,7 +135,7 @@ Preferred Date: ${formattedDate}`;
         </div>
 
         {/* Center/Bottom Content */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-12 pb-6 md:pb-12 text-center md:text-left">
+        <div ref={bottomRef} className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-12 pb-6 md:pb-12 text-center md:text-left">
           {/* CTA Buttons */}
           <div className="flex flex-col md:flex-row items-center gap-3 order-1 md:order-2 w-full md:w-auto mt-4 md:mt-0">
             {/* Locate Us Button */}
@@ -149,6 +182,7 @@ Preferred Date: ${formattedDate}`;
       {/* Absolute Bottom Center Scroll Button - Hidden on mobile */}
       <div className="hidden md:flex absolute bottom-12 md:bottom-16 left-1/2 transform -translate-x-1/2 z-20">
           <button 
+            ref={scrollBtnRef}
             onClick={scrollToNextSection}
             className="w-14 h-14 md:w-20 md:h-20 border border-white/40 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/10 hover:border-white hover:scale-105 transition-all duration-300 group outline-none bg-white/5 backdrop-blur-sm shadow-2xl"
           >

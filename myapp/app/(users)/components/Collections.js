@@ -1,10 +1,36 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const Collections = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
-  
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const productsRef = useRef(null);
+
+  // GSAP ScrollTrigger animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Heading stagger
+      gsap.fromTo(headingRef.current?.children ?? [],
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: { trigger: headingRef.current, start: 'top 85%' } }
+      );
+      // Products stagger
+      gsap.fromTo(productsRef.current?.children ?? [],
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out',
+          scrollTrigger: { trigger: productsRef.current, start: 'top 80%' } }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   const features = [
     { name: 'CLARITY' },
     { name: 'CRAFTSMANSHIP' },
@@ -60,7 +86,7 @@ const Collections = () => {
   const displayFeatures = [...features, ...features, ...features, ...features];
 
   return (
-    <div id="next-section" className="w-full bg-white">
+    <div id="next-section" ref={sectionRef} className="w-full bg-white">
       {/* Top Feature Bar */}
       <div className="bg-[#ffcc00] py-4 md:py-6 overflow-hidden">
         <div className="flex animate-marquee-fast md:justify-center items-center gap-12 whitespace-nowrap px-8">
@@ -75,7 +101,7 @@ const Collections = () => {
 
       {/* Explore Section */}
       <section className="px-12 md:px-32 lg:px-48 py-16 md:py-24 max-w-[1400px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
           <div className="text-center md:text-left w-full md:w-auto">
             <h3 className="text-sm md:text-2xl font-black text-gray-300 uppercase tracking-widest mb-4 md:mb-2">// EXPLORE</h3>
             <h2 className="text-4xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
@@ -108,8 +134,7 @@ const Collections = () => {
 
         {/* Product Grid */}
         <div className="relative w-full overflow-hidden">
-          <div 
-            className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
+          <div ref={productsRef} className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
             style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}
           >
             {products.map((product) => (

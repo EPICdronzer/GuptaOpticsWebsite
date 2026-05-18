@@ -1,6 +1,31 @@
-import React from 'react';
+'use client';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const PerfectPair = () => {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const rowsRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(headingRef.current?.children ?? [],
+        { x: -60, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: { trigger: headingRef.current, start: 'top 85%' } }
+      );
+      gsap.fromTo(rowsRef.current?.children ?? [],
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.18, ease: 'power3.out',
+          scrollTrigger: { trigger: rowsRef.current, start: 'top 85%' } }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   const items = [
     {
       id: 1,
@@ -26,10 +51,10 @@ const PerfectPair = () => {
   ];
 
   return (
-    <section className="w-full bg-white px-12 md:px-32 lg:px-48 py-24">
+    <section ref={sectionRef} className="w-full bg-white px-12 md:px-32 lg:px-48 py-24">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-12">
+        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start mb-12">
           <h2 className="text-5xl md:text-7xl font-bold text-black uppercase tracking-tighter leading-none">
             READY TO<br />
             <span className="text-gray-400">FIND YOUR</span><br />
@@ -49,7 +74,7 @@ const PerfectPair = () => {
         <div className="h-[1px] w-full bg-gray-100 mb-12"></div>
 
         {/* Rows */}
-        <div className="flex flex-col gap-8">
+        <div ref={rowsRef} className="flex flex-col gap-8">
           {items.map((item) => (
             <div key={item.id} className={`${item.bg} p-8 md:p-12 flex flex-col md:flex-row justify-between items-center group cursor-pointer transition-all duration-500`}>
               <div className="flex-1 max-w-2xl">

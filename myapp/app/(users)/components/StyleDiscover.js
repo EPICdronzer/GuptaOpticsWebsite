@@ -1,9 +1,32 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const StyleDiscover = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const productsRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(headingRef.current,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: headingRef.current, start: 'top 85%' } }
+      );
+      gsap.fromTo(productsRef.current?.children ?? [],
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out',
+          scrollTrigger: { trigger: productsRef.current, start: 'top 80%' } }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   const products = [
     {
@@ -44,10 +67,10 @@ const StyleDiscover = () => {
   const prevSlide = () => setActiveIndex((prev) => (prev - 1 + products.length) % products.length);
 
   return (
-    <section className="w-full bg-[#f6f5f2] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#f6f5f2] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto flex flex-col items-center">
         {/* Header */}
-        <div className="w-full mb-12">
+        <div ref={headingRef} className="w-full mb-12">
           <div className="flex flex-col items-center text-center">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-black uppercase tracking-tighter leading-none mb-6">
               DISCOVER<br />
@@ -79,7 +102,7 @@ const StyleDiscover = () => {
 
         {/* Product Grid */}
         <div className="relative w-full mb-16 md:mb-20">
-          <div className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
+          <div ref={productsRef} className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
                style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
             {products.map((product) => (
               <div key={product.id} className="min-w-full md:min-w-0 group cursor-pointer">

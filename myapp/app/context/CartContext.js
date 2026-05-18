@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
 
   // Load cart from localStorage once on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('eyeconic_cart');
+    const savedCart = localStorage.getItem('Opticalgalaxy_cart');
     if (savedCart) {
       try {
         const parsed = JSON.parse(savedCart);
@@ -39,7 +39,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (isLoaded) {
       const lightweightCart = cartItems.map(({ image, ...rest }) => rest);
-      localStorage.setItem('eyeconic_cart', JSON.stringify(lightweightCart));
+      localStorage.setItem('Opticalgalaxy_cart', JSON.stringify(lightweightCart));
     }
   }, [cartItems, isLoaded]);
 

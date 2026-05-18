@@ -1,30 +1,53 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const cardsRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(headingRef.current?.children ?? [],
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: { trigger: headingRef.current, start: 'top 85%' } }
+      );
+      gsap.fromTo(cardsRef.current?.children ?? [],
+        { y: 70, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.2, ease: 'power3.out',
+          scrollTrigger: { trigger: cardsRef.current, start: 'top 80%' } }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   const reviews = [
     {
       id: 1,
       name: 'MICHAEL R.',
       date: '1 month ago',
-      text: "I've never owned sunglasses that feel this good. They're lightweight, stylish, and I can wear them all day without discomfort. Eyeconic nailed it.",
+      text: "I've never owned sunglasses that feel this good. They're lightweight, stylish, and I can wear them all day without discomfort. Optical Galaxy nailed it.",
       initials: 'MR'
     },
     {
       id: 2,
       name: 'SOPHIA T.',
       date: '4 days ago',
-      text: "I bought a pair for vacation, and now I wear them everywhere. People keep asking me where I got them—Eyeconic is officially my style secret.",
+      text: "I bought a pair for vacation, and now I wear them everywhere. People keep asking me where I got them—Optical Galaxy is officially my style secret.",
       initials: 'ST'
     },
     {
       id: 3,
       name: 'AMELIA R.',
       date: '2 months ago',
-      text: "Eyeconic sunglasses completely changed how I see eyewear. They're stylish, lightweight, and I forget I'm even wearing them.",
+      text: "Optical Galaxy sunglasses completely changed how I see eyewear. They're stylish, lightweight, and I forget I'm even wearing them.",
       initials: 'AR'
     }
   ];
@@ -47,10 +70,10 @@ const Testimonials = () => {
   const prevSlide = () => setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
   return (
-    <section className="w-full bg-[#f8f8f8] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#f8f8f8] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
           <div className="text-center md:text-left w-full md:w-auto">
             <h2 className="text-4xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
               OUR CUSTOMERS<br />
@@ -83,7 +106,7 @@ const Testimonials = () => {
 
         {/* Testimonial Cards */}
         <div className="relative w-full">
-          <div className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
+          <div ref={cardsRef} className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
                style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
             {reviews.map((review) => (
               <div key={review.id} className="min-w-full md:min-w-0 bg-white p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-500 group border border-gray-50">

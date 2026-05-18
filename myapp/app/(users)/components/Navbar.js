@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { siteConfig } from '../../config';
 import { useCart } from '../../context/CartContext';
 
@@ -7,6 +8,15 @@ const Navbar = ({ isSolid = false, isWhiteOnLoad = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartCount, setIsCartOpen } = useCart();
+  const navRef = useRef(null);
+
+  // GSAP: Slide navbar down on mount
+  useEffect(() => {
+    gsap.fromTo(navRef.current,
+      { y: -80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', delay: 0.1 }
+    );
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +49,7 @@ const Navbar = ({ isSolid = false, isWhiteOnLoad = false }) => {
 
   return (
     <header 
+      ref={navRef}
       className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${navBg}`}
     >
       <div className="w-full flex items-center justify-between px-12 md:px-32 lg:px-48">
@@ -64,7 +75,7 @@ const Navbar = ({ isSolid = false, isWhiteOnLoad = false }) => {
           ))}
         </nav>
 
-        {/* Right Side: Cart & Mobile Toggle */}
+      {/* Right Side: Cart & Mobile Toggle */}
         <div className="flex items-center gap-4 md:gap-6">
           <div 
             onClick={() => setIsCartOpen(true)}
@@ -87,31 +98,45 @@ const Navbar = ({ isSolid = false, isWhiteOnLoad = false }) => {
           {/* Mobile Menu Button */}
           <button 
             className={`lg:hidden p-1 transition-colors duration-500 ${iconColor}`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => setIsMobileMenuOpen(true)}
           >
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"} />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
-      <div className={`lg:hidden absolute top-full left-0 w-full bg-black border-t border-white/10 transition-all duration-300 overflow-hidden ${
-        isMobileMenuOpen ? 'max-h-[400px] py-8 opacity-100 shadow-2xl' : 'max-h-0 opacity-0'
+      {/* Mobile Navigation Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[105]" 
+          onClick={() => setIsMobileMenuOpen(false)}
+        ></div>
+      )}
+
+      {/* Mobile Navigation Drawer (Right Side) */}
+      <div className={`lg:hidden fixed top-0 right-0 w-[80vw] sm:w-[60vw] md:w-[50vw] h-screen bg-black z-[110] transform transition-transform duration-500 ease-in-out shadow-2xl flex flex-col ${
+        isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
-        <nav className="flex flex-col items-center gap-6">
+        <div className="flex justify-end p-6">
+          <button onClick={() => setIsMobileMenuOpen(false)} className="text-white p-2 hover:text-yellow-400 transition-colors">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <nav className="flex flex-col items-end gap-5 px-8 pt-4">
           {navItems.map((item) => (
             <a 
               key={item.name} 
               href={item.link} 
-              className="text-lg font-black text-white uppercase tracking-widest hover:text-yellow-400 transition-colors"
+              className="text-lg font-black text-white uppercase tracking-widest hover:text-yellow-400 transition-colors text-right"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.name}
             </a>
           ))}
-          <a href="#" className="text-lg font-black text-white uppercase tracking-widest hover:text-yellow-400 transition-colors">Pages</a>
         </nav>
       </div>
     </header>

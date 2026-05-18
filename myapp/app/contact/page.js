@@ -1,10 +1,33 @@
 'use client';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../(users)/components/Navbar';
 import Footer from '../(users)/components/Footer';
 import { siteConfig } from '../config';
 
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+
 const ContactPage = () => {
+  const heroRef = useRef(null);
+  const infoRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero: image slides left, form slides right
+      const heroChildren = heroRef.current?.children ?? [];
+      if (heroChildren[0]) gsap.fromTo(heroChildren[0], { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.1, ease: 'power3.out' });
+      if (heroChildren[1]) gsap.fromTo(heroChildren[1], { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.1, ease: 'power3.out', delay: 0.2 });
+      // Info cards stagger in
+      gsap.fromTo(infoRef.current?.children ?? [],
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.18, ease: 'power3.out',
+          scrollTrigger: { trigger: infoRef.current, start: 'top 85%' } }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <main className="min-h-screen bg-white">
       {/* Reverted to standard scroll behavior */}
@@ -12,7 +35,7 @@ const ContactPage = () => {
       
       {/* 1. Contact Hero Section */}
       <section className="relative w-full pt-20 overflow-hidden">
-        <div className="flex flex-col lg:flex-row min-h-[70vh]">
+        <div ref={heroRef} className="flex flex-col lg:flex-row min-h-[70vh]">
           {/* Left: Image Side */}
           <div className="lg:w-1/2 relative bg-[#87CEEB]">
             <img 
@@ -70,7 +93,7 @@ const ContactPage = () => {
             </div>
             <div className="hidden md:block w-[1px] h-4 bg-black/20"></div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-black">FREE US SHIPPING</span>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-black">FREE PAN-INDIA SHIPPING</span>
             </div>
           </div>
         </div>
@@ -100,15 +123,15 @@ const ContactPage = () => {
           </div>
 
           {/* Info Cards Grid - EXACT MATCH DESIGN */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div ref={infoRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Phone Card */}
             <div className="relative h-[400px] overflow-hidden group">
               <img src="/hero-bg.png" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Phone BG" />
               <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-[#333333]">
                 <p className="text-[11px] font-medium uppercase mb-2">PHONE NUMBER</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">(+01) – 888 777 999</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">(+01) – 888 123 456</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">+91 98765 43210</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">+91 98765 01234</p>
               </div>
             </div>
 
@@ -118,8 +141,8 @@ const ContactPage = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-yellow-400 via-yellow-400/80 to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-[#333333]">
                 <p className="text-[11px] font-medium uppercase mb-2">STORE LOCATION</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">52 Mercer Street,</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">SoHo, NY</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">123 Vision Avenue,</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">New Delhi, India</p>
               </div>
             </div>
 
@@ -130,7 +153,7 @@ const ContactPage = () => {
               <div className="absolute bottom-10 left-10 text-[#333333]">
                 <p className="text-[11px] font-medium uppercase mb-2">AVAILABLE</p>
                 <p className="text-xl md:text-2xl font-bold leading-tight">Monday–Friday 9 AM –</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">6 PM (EST)</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">6 PM (IST)</p>
               </div>
             </div>
           </div>

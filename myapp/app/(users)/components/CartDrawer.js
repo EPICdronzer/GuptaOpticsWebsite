@@ -28,7 +28,7 @@ const CartDrawer = () => {
 
     // 2. Prepare WhatsApp Message
     const itemsList = cartItems.map(item => `- ${item.name} (${item.color}/${item.size}) x${item.quantity}`).join('\n');
-    const message = `Hello Eyeconic! I would like to place an order:
+    const message = `Hello Optical Galaxy! I would like to place an order:
     
 Order Details:
 ${itemsList}
@@ -125,7 +125,7 @@ Please confirm my order.`;
         <div className="p-8 border-t border-gray-100 flex flex-col gap-6">
           <div className="flex justify-between items-end">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">SUBTOTAL</span>
-            <span className="text-xl font-black">$ {cartTotal.toFixed(2)} USD</span>
+            <span className="text-xl font-black">₹ {cartTotal.toFixed(2)}</span>
           </div>
           <button 
             onClick={handleCheckout}
