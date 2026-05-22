@@ -335,7 +335,7 @@ const AboutPage = () => {
             </p>
             
             <a 
-              href="/shop"
+              href="/shop?tag=new"
               className="px-10 py-4 bg-transparent border border-black text-black text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 flex items-center gap-3"
             >
               SHOP NEW ARRIVALS

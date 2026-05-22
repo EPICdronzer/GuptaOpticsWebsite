@@ -31,24 +31,27 @@ const Testimonials = () => {
   const reviews = [
     {
       id: 1,
-      name: 'MICHAEL R.',
-      date: '1 month ago',
-      text: "I've never owned sunglasses that feel this good. They're lightweight, stylish, and I can wear them all day without discomfort. Optical Galaxy nailed it.",
-      initials: 'MR'
+      name: 'RAHUL SHARMA',
+      location: 'SHASTRI NAGAR, DELHI',
+      date: '2 hafte pehle',
+      text: "Yaar, itne achhe sunglasses pehle kabhi nahi mile! Bahut halke aur stylish hain. Din bhar pehenta hoon, bilkul takleef nahi hoti. Eyconic ne kuch khaas hi banaaya hai.",
+      initials: 'RS'
     },
     {
       id: 2,
-      name: 'SOPHIA T.',
-      date: '4 days ago',
-      text: "I bought a pair for vacation, and now I wear them everywhere. People keep asking me where I got them—Optical Galaxy is officially my style secret.",
-      initials: 'ST'
+      name: 'PRIYA GUPTA',
+      location: 'SHASTRI NAGAR, DELHI',
+      date: '5 din pehle',
+      text: "Bhai, main toh fan ho gayi hoon! Meri saheli ne poochha kahan se liye, toh maine Eyconic ka naam bataya. Ab woh bhi khareedne wali hai. Quality ekdum first class hai!",
+      initials: 'PG'
     },
     {
       id: 3,
-      name: 'AMELIA R.',
-      date: '2 months ago',
-      text: "Optical Galaxy sunglasses completely changed how I see eyewear. They're stylish, lightweight, and I forget I'm even wearing them.",
-      initials: 'AR'
+      name: 'AMIT VERMA',
+      location: 'SHASTRI NAGAR, DELHI',
+      date: '1 mahina pehle',
+      text: "Delhi ki garmi mein yeh sunglasses ne meri aankhein bachaa li! Design bhi top-notch hai aur price bhi reasonable. Shastri Nagar mein sab dost poochh rahe hain kahan se liye.",
+      initials: 'AV'
     }
   ];
 
@@ -131,6 +134,7 @@ const Testimonials = () => {
                   </div>
                   <div>
                     <h4 className="text-xs font-black uppercase tracking-tight">{review.name}</h4>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{review.location}</p>
                     <p className="text-[10px] text-gray-300 font-black uppercase tracking-widest">{review.date}</p>
                   </div>
                 </div>

@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getProducts } from '../../../actions/adminActions';
+import Link from 'next/link';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
@@ -28,26 +30,19 @@ const StyleDiscover = () => {
     return () => ctx.revert();
   }, []);
 
-  const products = [
-    {
-      id: 1,
-      name: 'VELVET MOTION',
-      price: '$ 119.00 USD',
-      image: '/prod-1.png'
-    },
-    {
-      id: 2,
-      name: 'URBAN OPULENCE',
-      price: '$ 99.00 USD',
-      image: '/prod-2.png'
-    },
-    {
-      id: 3,
-      name: 'MODERN GRANDEUR',
-      price: '$159.00 USD',
-      image: '/prod-3.png'
-    }
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts().then((all) => {
+      const filtered = all.filter((p) => {
+        if (!p.tags || !Array.isArray(p.tags)) return false;
+        return p.tags.some((t) =>
+          t.toLowerCase() === 'sunglasses' || t.toLowerCase() === 'summer'
+        );
+      });
+      setProducts(filtered.slice(0, 6));
+    }).catch(console.error);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -63,8 +58,8 @@ const StyleDiscover = () => {
     return () => clearInterval(interval);
   }, [activeIndex, mounted]);
 
-  const nextSlide = () => setActiveIndex((prev) => (prev + 1) % products.length);
-  const prevSlide = () => setActiveIndex((prev) => (prev - 1 + products.length) % products.length);
+  const nextSlide = () => setActiveIndex((prev) => (prev + 1) % Math.max(products.length, 1));
+  const prevSlide = () => setActiveIndex((prev) => (prev - 1 + Math.max(products.length, 1)) % Math.max(products.length, 1));
 
   return (
     <section ref={sectionRef} className="w-full bg-[#f6f5f2] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
@@ -104,18 +99,28 @@ const StyleDiscover = () => {
         <div className="relative w-full mb-16 md:mb-20">
           <div ref={productsRef} className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
                style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
-            {products.map((product) => (
-              <div key={product.id} className="min-w-full md:min-w-0 group cursor-pointer">
+            {products.length === 0 ? (
+              <div className="col-span-3 text-center py-20 text-gray-300 font-black uppercase tracking-widest text-sm">
+                No products tagged &ldquo;sunglasses&rdquo; or &ldquo;summer&rdquo; found.
+              </div>
+            ) : products.map((product) => (
+              <div key={product._id || product.id} className="min-w-full md:min-w-0 group cursor-pointer">
                 <div className="relative aspect-square bg-white overflow-hidden mb-6">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                  {product.images && product.images.length > 0 ? (
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-300 text-xs font-black uppercase tracking-widest">
+                      No Image
+                    </div>
+                  )}
                 </div>
                 <div className="flex justify-between items-end pb-4 border-b border-gray-200">
                   <h4 className="text-sm font-black uppercase tracking-tight">{product.name}</h4>
-                  <span className="text-gray-400 font-bold text-[10px] tracking-widest">{product.price}</span>
+                  <span className="text-gray-400 font-bold text-[10px] tracking-widest">₹{product.price}</span>
                 </div>
               </div>
             ))}
@@ -139,12 +144,12 @@ const StyleDiscover = () => {
         </div>
 
         {/* View All Button */}
-        <button className="group flex items-center gap-3 border border-black/20 px-10 py-4 rounded-sm hover:bg-black hover:text-white transition-all duration-300">
+        <Link href="/shop" className="group flex items-center gap-3 border border-black/20 px-10 py-4 rounded-sm hover:bg-black hover:text-white transition-all duration-300">
           <span className="text-sm font-black uppercase tracking-widest">View All</span>
           <svg className="w-4 h-4 transform group-hover:rotate-45 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
-        </button>
+        </Link>
       </div>
     </section>
   );

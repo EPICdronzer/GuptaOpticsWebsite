@@ -23,6 +23,7 @@ export async function createOrder(data) {
   try {
     const order = await Order.create({
       customerName: data.name,
+      customerPhone: data.phone,
       items: data.items,
       totalAmount: data.totalAmount,
       whatsappRedirected: true

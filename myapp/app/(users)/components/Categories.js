@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Categories = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -9,19 +10,24 @@ const Categories = () => {
     {
       name: 'KIDS',
       color: 'bg-yellow-400',
-      image: '/prod-1.png'
+      image: '/prod-1.png',
+      filter: 'KIDS'
     },
     {
       name: 'WOMAN',
       color: 'bg-teal-500',
-      image: '/eco-thumb.png'
+      image: '/eco-thumb.png',
+      filter: 'WOMAN'
     },
     {
       name: 'MAN',
       color: 'bg-orange-600',
-      image: '/hero-bg.png'
+      image: '/hero-bg.png',
+      filter: 'MAN'
     }
   ];
+
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -73,7 +79,11 @@ const Categories = () => {
           <div className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
                style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
             {categories.map((cat, idx) => (
-              <div key={idx} className={`relative min-w-full md:min-w-0 aspect-[3/4] ${cat.color} group overflow-hidden cursor-pointer rounded-sm`}>
+              <div
+                key={idx}
+                onClick={() => router.push(`/shop?gender=${cat.filter}`)}
+                className={`relative min-w-full md:min-w-0 aspect-[3/4] ${cat.color} group overflow-hidden cursor-pointer rounded-sm`}
+              >
                 <img 
                   src={cat.image} 
                   alt={cat.name} 

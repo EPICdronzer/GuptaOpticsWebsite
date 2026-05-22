@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
@@ -68,12 +69,12 @@ const ParallaxCTA = () => {
                 // Discover eyewear for every mood, style, and occasion.
             </p>
             
-            <button className="group flex items-center gap-3 border border-black/10 px-10 py-3.5 rounded-sm hover:bg-black hover:text-white transition-all duration-300 mx-auto">
+            <Link href="/shop?tag=new" className="group flex items-center gap-3 border border-black/10 px-10 py-3.5 rounded-sm hover:bg-black hover:text-white transition-all duration-300 mx-auto">
                 <span className="text-[11px] font-black uppercase tracking-widest">Shop New Arrivals</span>
                 <svg className="w-4 h-4 transform group-hover:rotate-45 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-            </button>
+            </Link>
         </div>
       </div>
 

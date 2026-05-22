@@ -10,6 +10,8 @@ const ProductSchema = new mongoose.Schema({
   sizes: [{ type: String }],
   stock: { type: Number, default: 0 },
   isFeatured: { type: Boolean, default: false },
+  tags: [{ type: String }], // Comma separated tags mapped to array
+  gender: { type: String, enum: ['Men', 'Women', 'Kids', 'Unisex'], default: 'Unisex' },
 }, { timestamps: true });
 
 export default mongoose.models.Product || mongoose.model('Product', ProductSchema);

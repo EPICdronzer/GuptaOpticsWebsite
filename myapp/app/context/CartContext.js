@@ -71,6 +71,10 @@ export const CartProvider = ({ children }) => {
     ));
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   const cartTotal = cartItems.reduce((total, item) => total + (parseFloat(item.price.replace(/[^0-9.]/g, '')) * item.quantity), 0);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -82,6 +86,7 @@ export const CartProvider = ({ children }) => {
       addToCart, 
       removeFromCart, 
       updateQuantity,
+      clearCart,
       cartTotal,
       cartCount
     }}>

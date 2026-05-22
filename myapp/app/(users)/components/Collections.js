@@ -2,15 +2,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getProducts } from '../../../actions/adminActions';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const Collections = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [products, setProducts] = useState([]);
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const productsRef = useRef(null);
+
+  // Fetch real products from DB
+  useEffect(() => {
+    getProducts().then((data) => {
+      // Show up to 6 products
+      setProducts(data.slice(0, 6));
+    }).catch(console.error);
+  }, []);
 
   // GSAP ScrollTrigger animations
   useEffect(() => {
@@ -38,26 +48,6 @@ const Collections = () => {
     { name: 'CONFIDENCE' },
   ];
 
-  const products = [
-    {
-      id: 1,
-      name: 'VELVET MOTION',
-      price: '$119.00',
-      image: '/prod-1.png'
-    },
-    {
-      id: 2,
-      name: 'URBAN OPULENCE',
-      price: '$99.00',
-      image: '/prod-2.png'
-    },
-    {
-      id: 3,
-      name: 'MODERN GRANDEUR',
-      price: '$159.00',
-      image: '/prod-3.png'
-    }
-  ];
 
   useEffect(() => {
     setMounted(true);
@@ -137,21 +127,33 @@ const Collections = () => {
           <div ref={productsRef} className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
             style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}
           >
-            {products.map((product) => (
-              <div key={product.id} className="min-w-full md:min-w-0 group cursor-pointer">
-                <div className="relative aspect-[4/5] bg-gray-50 overflow-hidden mb-6">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="flex justify-between items-end pb-4 border-b border-gray-100">
-                  <h4 className="text-base md:text-lg font-black uppercase tracking-tight">{product.name}</h4>
-                  <span className="text-gray-400 font-bold text-[10px] md:text-sm tracking-widest">{product.price}</span>
-                </div>
+            {products.length === 0 ? (
+              <div className="col-span-3 text-center py-16 text-gray-300 text-sm font-black uppercase tracking-widest">
+                No collections available yet.
               </div>
-            ))}
+            ) : (
+              products.map((product) => (
+                <div key={product._id || product.id} className="min-w-full md:min-w-0 group cursor-pointer">
+                  <div className="relative aspect-[4/5] bg-gray-50 overflow-hidden mb-6">
+                    {product.images && product.images.length > 0 ? (
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-300 text-xs uppercase font-black tracking-widest">
+                        No Image
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-end pb-4 border-b border-gray-100">
+                    <h4 className="text-base md:text-lg font-black uppercase tracking-tight">{product.name}</h4>
+                    <span className="text-gray-400 font-bold text-[10px] md:text-sm tracking-widest">₹{product.price}</span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
           
           {/* Mobile Dots */}

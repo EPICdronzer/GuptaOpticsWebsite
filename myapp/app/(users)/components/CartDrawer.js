@@ -1,45 +1,85 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { createOrder } from '../../../actions/clientActions';
 import { siteConfig } from '../../config';
 
 const CartDrawer = () => {
-  const { cartItems, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { cartItems, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleCheckout = async () => {
+  const handleCheckoutClick = () => {
     if (cartItems.length === 0) return;
+    setErrorMsg('');
+    setShowCheckoutModal(true);
+  };
 
-    // 1. Save to Backend
-    const orderData = {
-      name: "Customer", // You could add a name input field in the drawer
-      items: cartItems.map(item => ({
-        productId: item.id,
-        name: item.name,
-        price: parseFloat(item.price.replace(/[^0-9.]/g, '')),
-        quantity: item.quantity,
-        color: item.color,
-        size: item.size
-      })),
-      totalAmount: cartTotal
-    };
-
-    await createOrder(orderData);
-
-    // 2. Prepare WhatsApp Message
-    const itemsList = cartItems.map(item => `- ${item.name} (${item.color}/${item.size}) x${item.quantity}`).join('\n');
-    const message = `Hello Optical Galaxy! I would like to place an order:
+  const handleCheckoutSubmit = async (e) => {
+    e.preventDefault();
+    if (!customerName.trim() || !customerPhone.trim()) {
+      setErrorMsg('Please enter both name and number.');
+      return;
+    }
     
-Order Details:
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    try {
+      // 1. Save to Backend (Excluding image)
+      const orderData = {
+        name: customerName,
+        phone: customerPhone,
+        items: cartItems.map(item => ({
+          productId: item.id,
+          name: item.name,
+          price: parseFloat(item.price.replace(/[^0-9.]/g, '')),
+          quantity: item.quantity,
+          color: item.color,
+          size: item.size
+        })),
+        totalAmount: cartTotal
+      };
+
+      await createOrder(orderData);
+
+      // 2. Prepare WhatsApp Message
+      const itemsList = cartItems.map(item => `* ${item.name} (${item.color}/${item.size}) x${item.quantity} - ${item.price}`).join('\n');
+      
+      const message = `Hello Optical Galaxy! I would like to place an order:
+
+*Customer Details:*
+Name: ${customerName}
+Phone: ${customerPhone}
+
+*Order Details:*
 ${itemsList}
 
-Total Amount: ₹${cartTotal.toFixed(2)}
+*Total Amount:* ₹${cartTotal.toFixed(2)}
 
 Please confirm my order.`;
 
-    const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+      // 3. Clear Cart & Reset Modal
+      clearCart();
+      setShowCheckoutModal(false);
+      setIsCartOpen(false);
+      setCustomerName('');
+      setCustomerPhone('');
+
+      // 4. Redirect to WhatsApp
+      const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setErrorMsg('Failed to process checkout. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   return (
     <>
@@ -128,7 +168,7 @@ Please confirm my order.`;
             <span className="text-xl font-black">₹ {cartTotal.toFixed(2)}</span>
           </div>
           <button 
-            onClick={handleCheckout}
+            onClick={handleCheckoutClick}
             className="w-full bg-black text-white py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-yellow-400 hover:text-black transition-all duration-300"
           >
             CONTINUE TO CHECKOUT
@@ -136,6 +176,66 @@ Please confirm my order.`;
         </div>
 
       </div>
+
+      {/* Checkout Info Modal */}
+      {showCheckoutModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[300] flex items-center justify-center p-4">
+          <div className="bg-white max-w-md w-full p-8 shadow-2xl rounded-2xl border border-gray-100 relative animate-in fade-in zoom-in duration-300">
+            {/* Close Button */}
+            <button 
+              onClick={() => setShowCheckoutModal(false)}
+              className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <h3 className="text-xl font-black uppercase tracking-wider text-black mb-2">Checkout Details</h3>
+            <p className="text-xs text-gray-400 mb-6 uppercase tracking-wider">Please provide your details to finish your order via WhatsApp.</p>
+
+            <form onSubmit={handleCheckoutSubmit} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <label className="text-[9px] font-black uppercase tracking-widest text-gray-400">Full Name</label>
+                <input 
+                  type="text" 
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="ENTER YOUR NAME"
+                  required
+                  className="w-full border border-gray-200 p-3 rounded-lg focus:border-yellow-400 focus:outline-none uppercase text-xs font-black tracking-widest text-black"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[9px] font-black uppercase tracking-widest text-gray-400">Phone / WhatsApp Number</label>
+                <input 
+                  type="tel" 
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  placeholder="ENTER PHONE NUMBER"
+                  required
+                  className="w-full border border-gray-200 p-3 rounded-lg focus:border-yellow-400 focus:outline-none text-xs font-black tracking-widest text-black"
+                />
+              </div>
+
+              {errorMsg && (
+                <p className="text-[10px] font-black uppercase tracking-widest text-red-500 text-center mt-2">
+                  {errorMsg}
+                </p>
+              )}
+
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-black text-white py-4 rounded-lg font-black text-xs uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-colors mt-4 disabled:opacity-50"
+              >
+                {isSubmitting ? 'PROCESSING...' : 'PLACE ORDER & CHAT'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

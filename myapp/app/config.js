@@ -4,7 +4,7 @@ export const siteConfig = {
   contact: {
     email: "info@Opticalgalaxy.com",
     phone: "+91 98765 43210",
-    whatsapp: "9876543210", // Format: countrycodeNumber without +
+    whatsapp: "8383933578", 
   },
   address: {
     street: "123 Vision Avenue",
@@ -29,15 +29,14 @@ export const siteConfig = {
   },
   footer: {
     tagline: "Premium Eyewear for the Modern Individual.",
-    copyright: "© 2025 Optical Galaxy. All rights reserved.",
+    copyright: "© 2026 Optical Galaxy. All rights reserved.",
   },
-  // Backend Configuration
   backend: {
-    mongodbUri: "mongodb://localhost:27017/Opticalgalaxy", // Local MongoDB for now
+    mongodbUri: "mongodb://vharsh2003:vHARSH3081@cluster0-shard-00-00.tnpe4.mongodb.net:27017,cluster0-shard-00-01.tnpe4.mongodb.net:27017,cluster0-shard-00-02.tnpe4.mongodb.net:27017/optical?ssl=true&replicaSet=atlas-12swxn-shard-0&authSource=admin&retryWrites=true&w=majority", // Production Atlas MongoDB (Standard fallback to bypass SRV DNS issue)
     cloudinary: {
-      cloudName: "your_cloud_name",
-      apiKey: "your_api_key",
-      apiSecret: "your_api_secret",
+      cloudName: "dmxl9hnrm",
+      apiKey: "442673639689528",
+      apiSecret: "XmrsFQkJnN8w2VwXbHNUeJo7QEA",
       uploadPreset: "Opticalgalaxy_products"
     }
   }
