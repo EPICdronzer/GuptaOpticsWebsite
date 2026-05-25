@@ -1,12 +1,20 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
 import { siteConfig } from '../app/config';
 import { adminSetup } from '../app/adminSetup';
 import User from '../models/User';
 
-const MONGODB_URI = siteConfig.backend.mongodbUri;
+// Override Node's dns resolution for MongoDB Atlas SRV query issues on Windows
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (err) {
+  console.warn('Failed to configure custom DNS servers:', err);
+}
+
+const MONGODB_URI = process.env.MONGODB_URI || siteConfig.backend.mongodbUri;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the mongodbUri property in config.js');
+  throw new Error('Please define the MONGODB_URI environment variable or mongodbUri property in config.js');
 }
 
 let cached = global.mongoose;

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { siteConfig } from '../../config';
 import { adminSetup } from '../../adminSetup';
+import { verifyAdminCredentials } from '../../../actions/adminActions';
 
 const AdminLoginPage = () => {
   const router = useRouter();
@@ -19,17 +20,23 @@ const AdminLoginPage = () => {
     }
   }, [router]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (usernameInput === adminSetup.username && passwordInput === adminSetup.password) {
-      localStorage.setItem('isAdminAuthenticated', 'true');
-      setIsSuccess(true);
-      setLoginError('');
-      setTimeout(() => {
-        router.push('/admin/home');
-      }, 1500);
-    } else {
-      setLoginError('Invalid username or password');
+    setLoginError('');
+    try {
+      const res = await verifyAdminCredentials(usernameInput, passwordInput);
+      if (res && res.success) {
+        localStorage.setItem('isAdminAuthenticated', 'true');
+        setIsSuccess(true);
+        setTimeout(() => {
+          router.push('/admin/home');
+        }, 1500);
+      } else {
+        setLoginError(res?.error || 'Invalid username or password');
+      }
+    } catch (err) {
+      console.error('Error logging in:', err);
+      setLoginError('An unexpected error occurred. Please try again.');
     }
   };
 

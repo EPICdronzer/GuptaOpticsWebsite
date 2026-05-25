@@ -3,6 +3,7 @@ import dbConnect from '../lib/db';
 import Product from '../models/Product';
 import Appointment from '../models/Appointment';
 import Order from '../models/Order';
+import User from '../models/User';
 import { revalidatePath } from 'next/cache';
 import { v2 as cloudinary } from 'cloudinary';
 import { siteConfig } from '../app/config';
@@ -269,5 +270,22 @@ export async function getProductById(id) {
   } catch (err) {
     console.error("Error in getProductById server action:", err);
     return null;
+  }
+}
+
+export async function verifyAdminCredentials(username, password) {
+  try {
+    await dbConnect();
+    const user = await User.findOne({ username });
+    if (!user) {
+      return { success: false, error: 'Invalid username or password' };
+    }
+    if (user.password !== password) {
+      return { success: false, error: 'Invalid username or password' };
+    }
+    return { success: true, name: user.name };
+  } catch (error) {
+    console.error('Database connection error during admin verification:', error);
+    return { success: false, error: 'Database connection failed. Please ensure MongoDB is running and reachable.' };
   }
 }

@@ -45,21 +45,24 @@ const AboutPage = () => {
 
   const testimonials = [
     {
-      text: "I bought a pair for vacation, and now I wear them everywhere. People keep asking me where I got them —Optical Galaxy is officially my style secret.",
-      author: "SOPHIA T.",
-      date: "4 days ago",
+      text: "Gupta Optics ne meri zindagi badal di! Maine yahan se chashma liya aur AI test ke baad bilkul sahi number mila. Shastri Nagar mein sabse best optical shop hai yeh — main apne poore parivaar ko yahan bhejta hoon.",
+      author: "RAHUL SHARMA",
+      date: "3 din pehle",
+      location: "Shastri Nagar, Delhi",
       img: "/prod-1.png"
     },
     {
-      text: "The craftsmanship is unmatched. I've tried many luxury brands, but Optical Galaxy's attention to detail and comfort is on another level.",
-      author: "MARCUS R.",
-      date: "1 week ago",
+      text: "Bahut achha experience tha. Lens quality ekdum top-class hai, aankhon ko thakaan bilkul nahi hoti. Gupta Optics ka AI-based eye check truly next level hai — ek dum sahi prescription mili pehli baar mein!",
+      author: "PRIYA VERMA",
+      date: "1 hafte pehle",
+      location: "Rohini, Delhi",
       img: "/prod-2.png"
     },
     {
-      text: "Sustainable, stylish, and perfect fit. I love that I can look good while supporting a brand that cares about the planet.",
-      author: "ELENA G.",
-      date: "2 days ago",
+      text: "Main pichle 10 saal se Gupta Optics ka customer hoon. Unka naya AI diagnostic system dekh ke dil khush ho gaya. Frames stylish hain, price fair hai, aur service ekdum desi aur bharosemand.",
+      author: "AMIT GUPTA",
+      date: "2 din pehle",
+      location: "Shastri Nagar, Delhi",
       img: "/prod-3.png"
     }
   ];
@@ -91,24 +94,20 @@ const AboutPage = () => {
             </h1>
             <div className="max-w-xs md:pt-8">
               <p className="text-base md:text-lg font-medium text-[#777777] leading-relaxed italic">
-                // We believe eyewear should be more than a necessity
+                // Shastri Nagar, Delhi ka bharosemand optical store — behtar nazar, behtar zindagi
               </p>
             </div>
           </div>
           
-          <div className="relative w-full aspect-[21/9] bg-gray-200 overflow-hidden rounded-sm group cursor-pointer border border-black/5 shadow-2xl">
-            <img 
-              src="/hero-bg.png" 
-              alt="About Video Thumbnail" 
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          <div className="relative w-full aspect-[21/9] bg-gray-200 overflow-hidden rounded-sm border border-black/5 shadow-2xl">
+            <video 
+              src="https://about.fb.com/wp-content/uploads/2026/03/Introducing-Our-First-AI-Glasses-Built-For-Prescriptions_Header.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 md:w-24 md:h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-500">
-                <svg className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-1" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -119,7 +118,7 @@ const AboutPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24">
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight">OUR STORY</h2>
             <p className="text-[#777777] text-sm md:text-base leading-relaxed max-w-2xl">
-              It all started with a simple idea: great vision deserves great design. Frustrated by eyewear that was either overpriced or lacking in quality, we set out to create something better—frames that deliver luxury craftsmanship, modern style, and everyday comfort without compromise.
+              At Gupta Optics, we believe that perfect eyesight is a blend of advanced science and master craftsmanship. Founded with the vision to deliver premium, reliable eye care across India, we have partnered with leading eye checking agencies that utilize advanced AI diagnostics. This AI-driven technology scans and analyzes visual profiles with micro-precision, allowing us to engineer high-performance lenses and custom glasses that actively improve vision and eye health. Every pair represents the perfect fusion of state-of-the-art technology and authentic Indian craftsmanship.
             </p>
           </div>
 
@@ -129,8 +128,8 @@ const AboutPage = () => {
                 <img src="/prod-1.png" alt="Leo Carter" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
               </div>
               <div>
-                <h4 className="text-base md:text-lg font-black text-black">Leo Carter</h4>
-                <p className="text-gray-400 text-xs font-medium">Founder</p>
+                <h4 className="text-base md:text-lg font-black text-black">Rajesh Gupta</h4>
+                <p className="text-gray-400 text-xs font-medium">Founder, Gupta Optics</p>
               </div>
             </div>
 
@@ -139,14 +138,21 @@ const AboutPage = () => {
                 <img src="/prod-2.png" alt="Maya Brooks" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
               </div>
               <div>
-                <h4 className="text-base md:text-lg font-black text-black">Maya Brooks</h4>
-                <p className="text-gray-400 text-xs font-medium">Co-Founder</p>
+                <h4 className="text-base md:text-lg font-black text-black">Sunita Gupta</h4>
+                <p className="text-gray-400 text-xs font-medium">Co-Founder, Gupta Optics</p>
               </div>
             </div>
 
             <div className="md:col-span-2 flex flex-col gap-5">
-              <div className="aspect-[16/9] md:aspect-auto md:h-full bg-gray-100 overflow-hidden shadow-xl">
-                <img src="/hero-bg.png" alt="The Team" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+              <div className="aspect-[16/9] md:aspect-auto md:h-full bg-gray-100 overflow-hidden shadow-xl rounded-sm">
+                <video 
+                  src="https://video.wixstatic.com/video/1fcd02_5042ab6788d84bfa9ff8b1528c087d81/1080p/mp4/file.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -159,7 +165,7 @@ const AboutPage = () => {
           <div ref={brandRef} className="flex flex-col md:flex-row justify-between items-start mb-20 gap-10">
             <div className="max-w-xs">
               <p className="text-sm font-medium text-[#777777] leading-relaxed italic">
-                // Every pair of Optical Galaxy sunglasses is crafted with care to balance timeless style
+                // Shastri Nagar se lekar poore Delhi NCR mein — har chehra ke liye perfect chashma
               </p>
             </div>
             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-right leading-[0.85]">
@@ -227,7 +233,7 @@ const AboutPage = () => {
               </div>
               <div>
                 <p className="text-xs font-black uppercase tracking-widest">{testimonials[currentTestimonial].author}</p>
-                <p className="text-[9px] font-medium text-black/40 uppercase">{testimonials[currentTestimonial].date}</p>
+                <p className="text-[9px] font-medium text-black/40 uppercase">{testimonials[currentTestimonial].location} &bull; {testimonials[currentTestimonial].date}</p>
               </div>
             </div>
             
@@ -262,7 +268,7 @@ const AboutPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24">
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight">OUR VISION</h2>
             <p className="text-[#777777] text-sm md:text-base leading-relaxed max-w-2xl italic">
-              // We're not just creating eyewear—we're creating a movement. At Optical Galaxy, we envision a world where eyewear is more than an accessory.
+              // Humara sapna hai ki Delhi ka har insaan — chahe woh Shastri Nagar mein ho ya Karol Bagh — AI-powered eye check aur best quality lenses access kar sake. Gupta Optics har lens ko verify karta hai maximum visual correction ke liye.
             </p>
           </div>
 
@@ -276,7 +282,7 @@ const AboutPage = () => {
               <div className="flex flex-col gap-4">
                 <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter">CRAFTSMANSHIP THAT MATTERS</h3>
                 <p className="text-gray-500 text-sm md:text-base leading-relaxed group-hover:text-white/70 transition-colors">
-                  Behind every pair of Optical Galaxy sunglasses is a story of precision and passion. From the careful selection of durable materials to the hand-finished details.
+                  Behind every pair of Optical Galaxy & Gupta Optics glasses is a story of precision and passion. Working alongside top Indian eye checking agencies, we integrate advanced AI diagnostics to construct custom lenses designed specifically for better eyesight.
                 </p>
               </div>
             </div>
@@ -331,7 +337,7 @@ const AboutPage = () => {
             
             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">SEE WHAT'S NEXT</h2>
             <p className="text-gray-400 text-sm md:text-base font-medium mb-10 leading-relaxed italic">
-              // Discover eyewear for every mood, style, and occasion.
+              // Shastri Nagar, Delhi ke naye collection explore karein — har style, har mood ke liye.
             </p>
             
             <a 

@@ -49,27 +49,55 @@ const Collections = () => {
   ];
 
 
+  const [itemsToShow, setItemsToShow] = useState(3);
+  const [gap, setGap] = useState(48);
+  const [isHovered, setIsHovered] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Auto-scroll on mobile
   useEffect(() => {
-    if (!mounted) return;
-    const interval = setInterval(() => {
-      if (window.innerWidth < 768) {
-        nextSlide();
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setItemsToShow(3);
+        setGap(48);
+      } else if (window.innerWidth >= 768) {
+        setItemsToShow(2);
+        setGap(48);
+      } else {
+        setItemsToShow(1);
+        setGap(32);
       }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Auto-scroll on all viewports
+  useEffect(() => {
+    if (!mounted || products.length <= itemsToShow || isHovered) return;
+    const interval = setInterval(() => {
+      nextSlide();
     }, 4000);
     return () => clearInterval(interval);
-  }, [activeIndex, mounted]);
+  }, [activeIndex, mounted, products.length, itemsToShow, isHovered]);
 
   const nextSlide = () => {
-    setActiveIndex((prev) => (prev + 1) % products.length);
+    setActiveIndex((prev) => {
+      const maxIndex = Math.max(0, products.length - itemsToShow);
+      if (prev >= maxIndex) return 0;
+      return prev + 1;
+    });
   };
 
   const prevSlide = () => {
-    setActiveIndex((prev) => (prev - 1 + products.length) % products.length);
+    setActiveIndex((prev) => {
+      const maxIndex = Math.max(0, products.length - itemsToShow);
+      if (prev <= 0) return maxIndex;
+      return prev - 1;
+    });
   };
 
   // Feature bar marquee
@@ -122,18 +150,33 @@ const Collections = () => {
 
         <div className="h-[1px] w-full bg-gray-100 mb-12 md:mb-16"></div>
 
-        {/* Product Grid */}
-        <div className="relative w-full overflow-hidden">
-          <div ref={productsRef} className="flex md:grid md:grid-cols-3 gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
-            style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}
+        {/* Product Grid / Auto-Swiper */}
+        <div 
+          className="relative w-full overflow-hidden"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div 
+            ref={productsRef} 
+            className="flex flex-nowrap gap-8 md:gap-12 transition-transform duration-700 ease-in-out"
+            style={{ 
+              transform: mounted ? `translateX(calc(-${activeIndex} * (100% + ${gap}px) / ${itemsToShow}))` : 'none' 
+            }}
           >
             {products.length === 0 ? (
-              <div className="col-span-3 text-center py-16 text-gray-300 text-sm font-black uppercase tracking-widest">
+              <div className="w-full text-center py-16 text-gray-300 text-sm font-black uppercase tracking-widest">
                 No collections available yet.
               </div>
             ) : (
               products.map((product) => (
-                <div key={product._id || product.id} className="min-w-full md:min-w-0 group cursor-pointer">
+                <div 
+                  key={product._id || product.id} 
+                  className="group cursor-pointer"
+                  style={{
+                    flex: '0 0 auto',
+                    width: `calc((100% - ${(itemsToShow - 1) * gap}px) / ${itemsToShow})`
+                  }}
+                >
                   <div className="relative aspect-[4/5] bg-gray-50 overflow-hidden mb-6">
                     {product.images && product.images.length > 0 ? (
                       <img
@@ -156,15 +199,18 @@ const Collections = () => {
             )}
           </div>
           
-          {/* Mobile Dots */}
-          <div className="flex justify-center gap-2 mt-8 md:hidden">
-            {products.map((_, i) => (
-              <div 
-                key={i} 
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-black w-4' : 'bg-gray-200'}`}
-              ></div>
-            ))}
-          </div>
+          {/* Swiper Indicators / Dots */}
+          {products.length > itemsToShow && (
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: Math.max(1, products.length - itemsToShow + 1) }).map((_, i) => (
+                <div 
+                  key={i} 
+                  onClick={() => setActiveIndex(i)}
+                  className={`w-2 h-2 rounded-full cursor-pointer transition-all duration-300 ${activeIndex === i ? 'bg-black w-4' : 'bg-gray-200'}`}
+                ></div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

@@ -72,7 +72,7 @@ const Features = () => {
               <img src="/clarity-macro.png" alt="Macro lens detail" className="w-full h-full object-cover mix-blend-multiply opacity-80" />
             </div>
             <p className="text-sm font-black text-black/60 max-w-[200px] uppercase leading-relaxed tracking-wider text-center md:text-left">
-              // Every pair is built with advanced technology and crafted details
+              // AI-powered diagnostic lens customization by top Indian eye check agencies
             </p>
           </div>
           
@@ -112,7 +112,7 @@ const Features = () => {
               <div className="flex flex-col gap-4">
                 <h3 className="text-lg font-black uppercase tracking-[0.2em]">//CRAFTED FOR COMFORT</h3>
                 <p className="text-sm font-bold text-black/60 max-w-xl mx-auto md:mx-0 uppercase leading-relaxed tracking-wider">
-                  // Every pair is built with advanced technology and crafted details — so you can see clearly, feel comfortable, and look your best every day.
+                  // Built with advanced technology & crafted details. In partnership with leading Indian eye checking agencies, we integrate advanced AI diagnostics to create glasses and lenses for better eyesight.
                 </p>
               </div>
 
@@ -128,14 +128,21 @@ const Features = () => {
               <div className="h-[1px] w-full bg-black/10"></div>
 
               <p className="text-sm font-black text-black/80 max-w-2xl mx-auto md:mx-0 leading-relaxed tracking-wide uppercase">
-                Our eyewear is more than just stylish frames — it&apos;s a blend of advanced lens technology, lightweight comfort, and premium craftsmanship. Designed to protect your eyes, elevate your look, and fit seamlessly into your lifestyle, every pair delivers the perfect balance of fashion.
+                Our eyewear is more than just stylish frames — it&apos;s a fusion of advanced AI lens prescription diagnostics, lightweight comfort, and authentic Indian craftsmanship. Designed to protect your eyes, elevate your look, and fit seamlessly into your lifestyle, every pair delivers the perfect balance of fashion and visual clarity.
               </p>
             </div>
 
             <div className="flex-1 lg:max-w-xl">
-              <div className="aspect-[4/5] bg-black/5 rounded-sm overflow-hidden relative group">
-                <img src="/hero-bg.png" alt="Lifestyle portrait" className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700" />
-                <div className="absolute inset-0 bg-yellow-400/10 mix-blend-overlay"></div>
+              <div className="aspect-[4/5] bg-black/5 rounded-sm overflow-hidden relative group shadow-2xl">
+                <video 
+                  src="https://assets.mixkit.co/videos/preview/mixkit-optician-testing-a-customer-s-eyesight-41617-large.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-yellow-400/10 mix-blend-overlay pointer-events-none"></div>
               </div>
             </div>
           </div>

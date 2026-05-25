@@ -32,6 +32,7 @@ const PerfectPair = () => {
       title: 'CLASSIC EVERYDAY SHADES',
       bg: 'bg-[#f6f5f2]',
       image: '/eco-thumb.png',
+      description: '// From aviators to wayfarers, discover frames that never go out of style. Designed with lightweight materials and UV protection, these sunglasses keep you comfortable and stylish all day, every day.',
       tilt: 'rotate-6'
     },
     {
@@ -39,13 +40,15 @@ const PerfectPair = () => {
       title: 'CLASSIC EVERYDAY SHADES',
       bg: 'bg-white',
       image: '/hero-bg.png',
+      description: '// Precision-engineered lens design powered by AI diagnostics in collaboration with leading Indian clinics. Experience zero aberration and high contrast vision tailored for you.',
       tilt: '-rotate-6'
     },
     {
       id: 3,
       title: 'CLASSIC EVERYDAY SHADES',
+      video: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-new-glasses-41616-large.mp4',
       bg: 'bg-[#ffcc00]',
-      image: '/prod-1.png',
+      description: '// Indias finest craftsmanship combined with AI testing protocols. Experience the future of optometry with custom lenses engineered for unmatched visual clarity and comfort.',
       tilt: 'rotate-3'
     }
   ];
@@ -80,13 +83,24 @@ const PerfectPair = () => {
               <div className="flex-1 max-w-2xl">
                 <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-6">{item.title}</h3>
                 <p className="text-sm font-bold text-black/60 uppercase leading-relaxed tracking-wider">
-                  // From aviators to wayfarers, discover frames that never go out of style. Designed with lightweight materials and UV protection, these sunglasses keep you comfortable and stylish all day, every day.
+                  {item.description}
                 </p>
               </div>
               
               <div className="mt-8 md:mt-0 flex justify-center items-center">
                 <div className={`w-32 h-32 md:w-48 md:h-48 overflow-hidden rounded-sm transition-transform duration-500 group-hover:scale-110 ${item.tilt}`}>
-                  <img src={item.image} alt="Collection detail" className="w-full h-full object-cover" />
+                  {item.video ? (
+                    <video
+                      src={item.video}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img src={item.image} alt="Collection detail" className="w-full h-full object-cover" />
+                  )}
                 </div>
               </div>
             </div>

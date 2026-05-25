@@ -32,11 +32,11 @@ export const siteConfig = {
     copyright: "© 2026 Optical Galaxy. All rights reserved.",
   },
   backend: {
-    mongodbUri: "mongodb://vharsh2003:vHARSH3081@cluster0-shard-00-00.tnpe4.mongodb.net:27017,cluster0-shard-00-01.tnpe4.mongodb.net:27017,cluster0-shard-00-02.tnpe4.mongodb.net:27017/optical?ssl=true&replicaSet=atlas-12swxn-shard-0&authSource=admin&retryWrites=true&w=majority", // Production Atlas MongoDB (Standard fallback to bypass SRV DNS issue)
-    cloudinary: {
-      cloudName: "dmxl9hnrm",
-      apiKey: "442673639689528",
-      apiSecret: "XmrsFQkJnN8w2VwXbHNUeJo7QEA",
+      mongodbUri: "mongodb+srv://opticalgalaxy2012_db_user:AJ6FeUXh5uVXStcA@cluster0.cuqt2h4.mongodb.net/?appName=Cluster0",    
+      cloudinary: {
+      cloudName: "dug4opmfw",
+      apiKey: "611571572347662",
+      apiSecret: "ZRhyyHRi5VNa2OYhCfIRYvSZ83M",
       uploadPreset: "Opticalgalaxy_products"
     }
   }
