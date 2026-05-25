@@ -32,7 +32,7 @@ export const siteConfig = {
     copyright: "© 2026 Optical Galaxy. All rights reserved.",
   },
   backend: {
-      mongodbUri: "mongodb+srv://opticalgalaxy2012_db_user:AJ6FeUXh5uVXStcA@cluster0.cuqt2h4.mongodb.net/?appName=Cluster0",    
+      mongodbUri: "mongodb://opticalgalaxy2012_db_user:AJ6FeUXh5uVXStcA@ac-njsbs3d-shard-00-00.cuqt2h4.mongodb.net:27017,ac-njsbs3d-shard-00-01.cuqt2h4.mongodb.net:27017,ac-njsbs3d-shard-00-02.cuqt2h4.mongodb.net:27017/?authSource=admin&replicaSet=atlas-j0gci4-shard-0&tls=true&appName=Cluster0",    
       cloudinary: {
       cloudName: "dug4opmfw",
       apiKey: "611571572347662",

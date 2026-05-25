@@ -45,12 +45,13 @@ export default function OpticalGalaxyReview() {
   );
 
   useEffect(() => {
-    generateReview(5, 0);
+    const randomIdx = Math.floor(Math.random() * reviewsByRating[5].length);
+    generateReview(5, randomIdx);
   }, []);
 
   const handleRating = (val) => {
     setRating(val);
-    generateReview(val, 0);
+    generateReview(val, Math.floor(Math.random() * (reviewsByRating[val] || reviewsByRating[3]).length));
   };
 
   const handleRegenerate = () => {
