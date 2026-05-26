@@ -42,10 +42,10 @@ const Footer = () => {
       </div>
 
       <div className="relative z-10 max-w-[1400px] mx-auto">
-        <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-32">
+        <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-32 w-full justify-items-center">
           
           {/* Left Side: Brand & CTA (Spans 5 columns) */}
-          <div className="lg:col-span-5 flex flex-col gap-10">
+          <div className="lg:col-span-5 flex flex-col items-center text-center gap-10 w-full">
             <div>
               <span className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.85] block">
                 <span className="text-yellow-400">{firstWord}</span>
@@ -53,7 +53,7 @@ const Footer = () => {
               </span>
             </div>
             
-            <div className="max-w-md flex flex-col gap-5 mt-4">
+            <div className="max-w-md w-full flex flex-col items-center gap-5 mt-4">
               <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-white/70">
                 WHATSAPP US TO GET 15% OFF YOUR FIRST PAIR
               </h4>
@@ -64,7 +64,7 @@ const Footer = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Type your message..." 
-                  className="w-full bg-transparent pl-6 pr-32 py-4 text-sm font-medium focus:outline-none text-white placeholder-white/40"
+                  className="w-full bg-transparent pl-6 pr-32 py-4 text-sm font-medium focus:outline-none text-white placeholder-white/40 text-center"
                 />
                 <button 
                   onClick={handleWhatsAppClick}
@@ -80,11 +80,11 @@ const Footer = () => {
           </div>
 
           {/* Right Side: Links (Spans 7 columns) */}
-          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-8 pt-4">
+          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-8 pt-4 w-full justify-items-center">
             {/* Main Pages */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col items-center text-center gap-8">
               <h5 className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">MAIN PAGES</h5>
-              <ul className="flex flex-col gap-5">
+              <ul className="flex flex-col items-center gap-5">
                 {[
                   { name: 'Home', link: '/' },
                   { name: 'Shop', link: siteConfig.links.shop },
@@ -106,9 +106,9 @@ const Footer = () => {
             </div>
 
             {/* Social */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col items-center text-center gap-8">
               <h5 className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">SOCIAL</h5>
-              <ul className="flex flex-col gap-5">
+              <ul className="flex flex-col items-center gap-5">
                 {Object.entries(siteConfig.social).map(([platform, url]) => (
                   <li key={platform}>
                     <a href={url} target="_blank" rel="noopener noreferrer" className="group inline-flex text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-yellow-400 transition-colors">
@@ -123,9 +123,9 @@ const Footer = () => {
             </div>
 
             {/* Contact */}
-            <div className="col-span-2 md:col-span-1 flex flex-col gap-8 mt-8 md:mt-0">
+            <div className="col-span-2 md:col-span-1 flex flex-col items-center text-center gap-8 mt-8 md:mt-0">
               <h5 className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">CONTACT</h5>
-              <ul className="flex flex-col gap-5">
+              <ul className="flex flex-col items-center gap-5">
                 <li>
                   <a href={`mailto:${siteConfig.contact.email}`} className="text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-yellow-400 transition-colors">
                     {siteConfig.contact.email}
@@ -137,7 +137,7 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href={`https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-[11px] font-black uppercase tracking-widest text-[#25D366] hover:brightness-125 transition-colors flex items-center gap-2 group">
+                  <a href={`https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-[11px] font-black uppercase tracking-widest text-[#25D366] hover:brightness-125 transition-colors flex items-center justify-center gap-2 group">
                     <span className="relative w-2 h-2">
                       <span className="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-75"></span>
                       <span className="relative block w-2 h-2 bg-[#25D366] rounded-full"></span>
@@ -153,7 +153,7 @@ const Footer = () => {
                     href={siteConfig.address.googleMaps} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-[10px] font-medium tracking-widest text-white/40 hover:text-white transition-colors leading-relaxed block"
+                    className="text-[10px] font-medium tracking-widest text-white/40 hover:text-white transition-colors leading-relaxed block text-center"
                   >
                     {siteConfig.address.full}
                   </a>
@@ -164,7 +164,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div className="pt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
             {siteConfig.footer.copyright}
           </p>

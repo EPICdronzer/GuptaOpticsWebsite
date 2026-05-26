@@ -84,7 +84,7 @@ Location: ${locationText}`;
     <section ref={heroRef} className="relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black">
       {/* Sticky Background Image */}
       <div 
-        className="absolute inset-0 z-0 bg-[url('/hero-bg.png')] bg-cover bg-center bg-fixed"
+        className="absolute inset-0 z-0 bg-[url('/hero-bg.png')] bg-cover bg-center bg-scroll md:bg-fixed"
         aria-hidden="true"
       ></div>
       

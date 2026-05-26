@@ -10,6 +10,14 @@ import PerfectPair from './components/PerfectPair';
 import ParallaxCTA from './components/ParallaxCTA';
 import Footer from './components/Footer';
 
+export const metadata = {
+  title: "Home | Optical Galaxy & Gupta Optics",
+  description: "Official website of Optical Galaxy & Gupta Optics. Book an eye test at our Shastri Nagar, Delhi shop or at home. Browse our collections of high-quality specs, frames, and contact lenses.",
+  alternates: {
+    canonical: "/"
+  }
+};
+
 export default function Page() {
   return (
     <main className="bg-white">

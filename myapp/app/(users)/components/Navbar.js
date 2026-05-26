@@ -56,7 +56,8 @@ const Navbar = ({ isSolid = false, isWhiteOnLoad = false }) => {
         {/* Logo */}
         <div className="flex items-center">
           <span className={`text-xl md:text-2xl font-black tracking-tight uppercase transition-colors duration-500 ${textColor}`}>
-            {siteConfig.name.toUpperCase()}
+            <span className="inline md:hidden">OG</span>
+            <span className="hidden md:inline">{siteConfig.name.toUpperCase()}</span>
           </span>
         </div>
 
