@@ -47,10 +47,10 @@ const Categories = () => {
   const prevSlide = () => setActiveIndex((prev) => (prev - 1 + categories.length) % categories.length);
 
   return (
-    <section className="w-full bg-white px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
+    <section className="w-full bg-white px-6 md:px-16 lg:px-32 xl:px-48 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-16 md:mb-20 gap-8 md:gap-12">
+        <div className="flex flex-col md:flex-row justify-between items-start mb-12 md:mb-16 lg:mb-20 gap-8 md:gap-12">
           <div className="flex flex-col items-center md:items-start gap-8 order-2 md:order-1 w-full md:w-auto">
             <p className="text-gray-400 font-bold text-[11px] uppercase tracking-widest max-w-[300px] text-center md:text-left">
               // From playful kid&apos;s shades to bold men&apos;s designs and chic women&apos;s collections.
@@ -67,7 +67,7 @@ const Categories = () => {
           </div>
           
           <div className="md:text-right order-1 md:order-2 w-full md:w-auto text-center md:text-right">
-            <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-black uppercase tracking-tighter leading-none">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-black uppercase tracking-tighter leading-none">
               SHOP SUNGLASSES<br />
               <span className="text-gray-300">FOR EVERYONE</span>
             </h2>
@@ -82,7 +82,7 @@ const Categories = () => {
               <div
                 key={idx}
                 onClick={() => router.push(`/shop?gender=${cat.filter}`)}
-                className={`relative min-w-full md:min-w-0 aspect-[3/4] ${cat.color} group overflow-hidden cursor-pointer rounded-sm`}
+                className={`relative min-w-full md:min-w-0 aspect-[3/4] md:aspect-[2/3] lg:aspect-[3/4] ${cat.color} group overflow-hidden cursor-pointer rounded-sm`}
               >
                 <img 
                   src={cat.image} 

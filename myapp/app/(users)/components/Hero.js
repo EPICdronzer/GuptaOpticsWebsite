@@ -81,24 +81,24 @@ Location: ${locationText}`;
   };
 
   return (
-    <section ref={heroRef} className="relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black">
+    <section ref={heroRef} className="relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black">
       {/* Sticky Background Image */}
       <div 
         className="absolute inset-0 z-0 bg-[url('/hero-bg.png')] bg-cover bg-center bg-fixed"
         aria-hidden="true"
       ></div>
       
-      <div className="relative z-10 flex flex-col justify-between h-full pt-12 md:pt-32">
+      <div className="relative z-10 flex flex-col justify-between h-full pt-12 md:pt-24 lg:pt-32">
         {/* Top Section: Title and Form */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left">
+        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start text-center lg:text-left">
           <div ref={titleRef} className="title-container max-w-2xl">
-            <h1 className="text-[3.2rem] md:text-[6rem] lg:text-[7.5rem] font-black leading-[0.85] tracking-tighter uppercase mb-6 md:mb-0">
+            <h1 className="text-[3.2rem] md:text-[5rem] lg:text-[7.5rem] font-black leading-[0.85] tracking-tighter uppercase mb-6 lg:mb-0">
               SHADES<br />OF STYLE
             </h1>
           </div>
           
           {/* Booking Form (Replacing the Categories List) */}
-          <div ref={formRef} className="mt-2 md:mt-0 w-full md:w-[320px] bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl">
+          <div ref={formRef} className="mt-2 lg:mt-0 w-full md:w-[400px] lg:w-[320px] bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl">
             <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400 mb-4 md:mb-6">Book An Eye Test</h3>
             
             <form onSubmit={handleBooking} className="flex flex-col gap-4 text-left">
@@ -163,12 +163,12 @@ Location: ${locationText}`;
         </div>
 
         {/* Center/Bottom Content */}
-        <div ref={bottomRef} className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-12 pb-6 md:pb-12 text-center md:text-left">
+        <div ref={bottomRef} className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8 lg:gap-12 pb-6 md:pb-8 lg:pb-12 text-center md:text-left">
           {/* CTA Buttons */}
           <div className="flex flex-col md:flex-row items-center gap-3 order-1 md:order-2 w-full md:w-auto mt-4 md:mt-0">
             {/* Locate Us Button */}
             <a 
-              href={siteConfig.address.googleMaps} 
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('A-187, Main Market, near Shastri Budh Park, Shastri Nagar, New Delhi, Delhi 110052')}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white hover:text-black px-8 py-3 md:px-6 md:py-3 rounded-full transition-all duration-300 shadow-xl group w-full md:w-auto justify-center"

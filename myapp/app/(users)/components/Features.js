@@ -63,21 +63,21 @@ const Features = () => {
   const prevSlide = () => setActiveIndex((prev) => (prev - 1 + cards.length) % cards.length);
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#ffcc00] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#ffcc00] px-6 md:px-16 lg:px-32 xl:px-48 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Top Header */}
-        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12 md:mb-20">
-          <div className="flex flex-col gap-6 w-full md:w-auto items-center md:items-start">
-            <div className="w-48 h-32 overflow-hidden rounded-sm bg-black/5">
+        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-12 md:mb-20">
+          <div className="flex flex-col gap-6 w-full md:w-auto items-center md:items-start flex-shrink-0">
+            <div className="w-36 md:w-48 h-24 md:h-32 overflow-hidden rounded-sm bg-black/5">
               <img src="/clarity-macro.png" alt="Macro lens detail" className="w-full h-full object-cover mix-blend-multiply opacity-80" />
             </div>
-            <p className="text-sm font-black text-black/60 max-w-[200px] uppercase leading-relaxed tracking-wider text-center md:text-left">
+            <p className="text-xs md:text-sm font-black text-black/60 max-w-[200px] uppercase leading-relaxed tracking-wider text-center md:text-left">
               // AI-powered diagnostic lens customization by top Indian eye check agencies
             </p>
           </div>
           
-          <div className="flex-1 text-center md:text-right w-full">
-            <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-black leading-[0.85] tracking-tighter uppercase">
+          <div className="flex-1 text-center md:text-right w-full min-w-0">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-black leading-[0.85] tracking-tighter uppercase">
               EYEWEAR DESIGNED<br />FOR CLARITY AND<br />
               <span className="text-black/30">CONFIDENCE</span>
             </h2>
@@ -107,8 +107,8 @@ const Features = () => {
         {/* Expandable Content Container - Always visible on md and up */}
         <div className={`transition-all duration-700 ease-in-out md:max-h-none md:opacity-100 md:visible md:overflow-visible ${isExpanded ? 'max-h-[3000px] opacity-100 visible' : 'max-h-0 opacity-0 invisible overflow-hidden md:block'}`}>
           {/* Middle Content */}
-          <div className="flex flex-col lg:flex-row gap-16">
-            <div className="flex-1 flex flex-col gap-12 text-center md:text-left">
+          <div className="flex flex-col md:flex-row gap-10 lg:gap-16">
+            <div className="flex-1 flex flex-col gap-8 md:gap-10 lg:gap-12 text-center md:text-left">
               <div className="flex flex-col gap-4">
                 <h3 className="text-lg font-black uppercase tracking-[0.2em]">//CRAFTED FOR COMFORT</h3>
                 <p className="text-sm font-bold text-black/60 max-w-xl mx-auto md:mx-0 uppercase leading-relaxed tracking-wider">
@@ -132,8 +132,8 @@ const Features = () => {
               </p>
             </div>
 
-            <div className="flex-1 lg:max-w-xl">
-              <div className="aspect-[4/5] bg-black/5 rounded-sm overflow-hidden relative group shadow-2xl">
+            <div className="flex-1 md:max-w-sm lg:max-w-xl">
+              <div className="aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] bg-black/5 rounded-sm overflow-hidden relative group shadow-2xl">
                 <img 
                   src="/shop-front.png"
                   alt="Optical Galaxy Storefront"
@@ -149,7 +149,7 @@ const Features = () => {
             <div ref={cardsRef} className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
                  style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
               {cards.map((card, i) => (
-                <div key={i} className="min-w-full md:min-w-0 p-10 border border-black/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
+                <div key={i} className="min-w-full md:min-w-0 p-6 md:p-8 lg:p-10 border border-black/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
                   <h4 className="text-base font-black mb-4 uppercase tracking-widest">{card.title}</h4>
                   <p className="text-sm font-bold text-black/60 leading-relaxed tracking-tight uppercase">
                     {card.desc}

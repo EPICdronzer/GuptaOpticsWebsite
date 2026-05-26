@@ -14,7 +14,7 @@ export const siteConfig = {
     zip: "110052",
     country: "India",
     full: "We Have Two Shops: Shop 1 (B-1584, Main Market, Shastri Nagar) & Shop 2 (A-187, Main Market, near Shastri Budh Park, Shastri Nagar), New Delhi, Delhi 110052",
-    googleMaps: "https://www.google.com/maps/place/A-187,+Main+Market,+near+Shastri+Budh+Park,+Shastri+Nagar,+New+Delhi,+Delhi+110052/"
+    googleMaps: "https://www.google.com/maps/search/?api=1&query=A-187%2C+Main+Market%2C+near+Shastri+Budh+Park%2C+Shastri+Nagar%2C+New+Delhi%2C+Delhi+110052"
   },
   social: {
     instagram: "https://www.instagram.com/opticalgalaxy_theog",

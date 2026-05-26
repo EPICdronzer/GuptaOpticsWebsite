@@ -162,12 +162,12 @@ const ContactPage = () => {
       {/* 3. Full Width Map Section */}
       <section className="w-full h-[500px] bg-gray-100">
         <iframe 
-          src="https://maps.google.com/maps?q=A-187,+Main+Market,+near+Shastri+Budh+Park,+Shastri+Nagar,+New+Delhi,+Delhi+110052&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          src="https://maps.google.com/maps?q=Optical+Galaxy+A-187+Main+Market+Shastri+Nagar+New+Delhi+110052&t=&z=17&ie=UTF8&iwloc=B&output=embed" 
           className="w-full h-full border-0" 
           allowFullScreen="" 
           loading="lazy" 
           referrerPolicy="no-referrer-when-downgrade"
-          title="Optical Galaxy Shastri Nagar Locations"
+          title="Optical Galaxy Shastri Nagar Location"
         ></iframe>
       </section>
 
