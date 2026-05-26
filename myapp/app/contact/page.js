@@ -130,8 +130,7 @@ const ContactPage = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-[#333333]">
                 <p className="text-[11px] font-medium uppercase mb-2">PHONE NUMBER</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">+91 98765 43210</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">+91 98765 01234</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">{siteConfig.contact.phone}</p>
               </div>
             </div>
 
@@ -141,8 +140,8 @@ const ContactPage = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-yellow-400 via-yellow-400/80 to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-[#333333]">
                 <p className="text-[11px] font-medium uppercase mb-2">STORE LOCATION</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">123 Vision Avenue,</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">New Delhi, India</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">B-1584 & A-187,</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">Main Market Shastri Nagar</p>
               </div>
             </div>
 
@@ -152,12 +151,24 @@ const ContactPage = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-[#333333]">
                 <p className="text-[11px] font-medium uppercase mb-2">AVAILABLE</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">Monday–Friday 9 AM –</p>
-                <p className="text-xl md:text-2xl font-bold leading-tight">6 PM (IST)</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">Everyday</p>
+                <p className="text-xl md:text-2xl font-bold leading-tight">11 AM – 10 PM (IST)</p>
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* 3. Full Width Map Section */}
+      <section className="w-full h-[500px] bg-gray-100">
+        <iframe 
+          src="https://maps.google.com/maps?q=A-187,+Main+Market,+near+Shastri+Budh+Park,+Shastri+Nagar,+New+Delhi,+Delhi+110052&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          className="w-full h-full border-0" 
+          allowFullScreen="" 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Optical Galaxy Shastri Nagar Locations"
+        ></iframe>
       </section>
 
       <Footer />

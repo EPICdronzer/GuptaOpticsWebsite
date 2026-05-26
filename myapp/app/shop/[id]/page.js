@@ -14,6 +14,11 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [prescription, setPrescription] = useState({
+    re: { sph: '', cyl: '', axis: '', add: '' },
+    le: { sph: '', cyl: '', axis: '', add: '' }
+  });
+  const [hasPrescription, setHasPrescription] = useState(false);
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -51,7 +56,8 @@ const ProductDetail = () => {
       price: `₹${product.price}`,
       image: (product.images && product.images[0]) || '/placeholder.png',
       color: selectedColor,
-      size: selectedSize
+      size: selectedSize,
+      prescription: hasPrescription ? prescription : null
     });
   };
 
@@ -195,7 +201,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Size Selector */}
-            <div className="mb-10">
+            <div className="mb-8">
               <p className="text-[10px] font-black uppercase tracking-widest mb-4 text-gray-400">Size</p>
               <div className="flex flex-wrap gap-3">
                 {sizesList.map((size) => (
@@ -210,6 +216,43 @@ const ProductDetail = () => {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Eye Prescription Checkbox & Form */}
+            <div className="mb-10">
+              <label className="flex items-center gap-3 cursor-pointer mb-4">
+                <input 
+                  type="checkbox" 
+                  checked={hasPrescription} 
+                  onChange={(e) => setHasPrescription(e.target.checked)}
+                  className="w-4 h-4 accent-black"
+                />
+                <span className="text-sm font-bold uppercase tracking-wider text-black">Add Prescription Lenses</span>
+              </label>
+              
+              {hasPrescription && (
+                <div className="bg-gray-50 border border-gray-200 p-4 md:p-6 rounded-sm text-xs font-medium">
+                  <div className="mb-4">
+                    <p className="font-black uppercase tracking-widest mb-2 text-black border-b border-gray-200 pb-2">Right Eye (OD)</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      <input type="text" placeholder="SPH" value={prescription.re.sph} onChange={(e) => setPrescription({...prescription, re: {...prescription.re, sph: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                      <input type="text" placeholder="CYL" value={prescription.re.cyl} onChange={(e) => setPrescription({...prescription, re: {...prescription.re, cyl: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                      <input type="text" placeholder="AXIS" value={prescription.re.axis} onChange={(e) => setPrescription({...prescription, re: {...prescription.re, axis: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                      <input type="text" placeholder="ADD" value={prescription.re.add} onChange={(e) => setPrescription({...prescription, re: {...prescription.re, add: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-black uppercase tracking-widest mb-2 text-black border-b border-gray-200 pb-2">Left Eye (OS)</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      <input type="text" placeholder="SPH" value={prescription.le.sph} onChange={(e) => setPrescription({...prescription, le: {...prescription.le, sph: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                      <input type="text" placeholder="CYL" value={prescription.le.cyl} onChange={(e) => setPrescription({...prescription, le: {...prescription.le, cyl: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                      <input type="text" placeholder="AXIS" value={prescription.le.axis} onChange={(e) => setPrescription({...prescription, le: {...prescription.le, axis: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                      <input type="text" placeholder="ADD" value={prescription.le.add} onChange={(e) => setPrescription({...prescription, le: {...prescription.le, add: e.target.value}})} className="border p-2 outline-none focus:border-black" />
+                    </div>
+                  </div>
+                  <p className="text-[9px] text-gray-400 mt-4 uppercase tracking-widest">Optional: Please copy the details exactly as provided by your eye doctor.</p>
+                </div>
+              )}
             </div>
 
             {/* Add to Cart */}

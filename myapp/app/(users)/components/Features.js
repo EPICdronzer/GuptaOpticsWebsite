@@ -134,12 +134,9 @@ const Features = () => {
 
             <div className="flex-1 lg:max-w-xl">
               <div className="aspect-[4/5] bg-black/5 rounded-sm overflow-hidden relative group shadow-2xl">
-                <video 
-                  src="https://assets.mixkit.co/videos/preview/mixkit-optician-testing-a-customer-s-eyesight-41617-large.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
+                <img 
+                  src="/shop-front.png"
+                  alt="Optical Galaxy Storefront"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-yellow-400/10 mix-blend-overlay pointer-events-none"></div>

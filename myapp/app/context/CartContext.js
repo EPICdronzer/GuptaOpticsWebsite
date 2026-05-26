@@ -45,10 +45,15 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCartItems((prev) => {
-      const existing = prev.find(item => item.id === product.id && item.color === product.color && item.size === product.size);
+      const existing = prev.find(item => 
+        item.id === product.id && 
+        item.color === product.color && 
+        item.size === product.size &&
+        JSON.stringify(item.prescription) === JSON.stringify(product.prescription)
+      );
       if (existing) {
         return prev.map(item => 
-          (item.id === product.id && item.color === product.color && item.size === product.size)
+          (item.id === product.id && item.color === product.color && item.size === product.size && JSON.stringify(item.prescription) === JSON.stringify(product.prescription))
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );

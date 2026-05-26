@@ -5,7 +5,7 @@ import { siteConfig } from '../../config';
 import { createAppointment } from '../../../actions/clientActions';
 
 const Hero = () => {
-  const [formData, setFormData] = useState({ name: '', date: '' });
+  const [formData, setFormData] = useState({ name: '', date: '', location: 'shop' });
   const [minDate, setMinDate] = useState('');
   const heroRef = useRef(null);
   const titleRef = useRef(null);
@@ -68,10 +68,13 @@ const Hero = () => {
       day: 'numeric'
     });
 
+    const locationText = formData.location === 'home' ? 'At Home' : 'At Shop';
+
     const message = `Hello Optical Galaxy! I would like to book an eye test appointment.
     
 Name: ${formData.name}
-Preferred Date: ${formattedDate}`;
+Preferred Date: ${formattedDate}
+Location: ${locationText}`;
 
     const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -99,6 +102,31 @@ Preferred Date: ${formattedDate}`;
             <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400 mb-4 md:mb-6">Book An Eye Test</h3>
             
             <form onSubmit={handleBooking} className="flex flex-col gap-4 text-left">
+              <div className="flex gap-4 mb-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="location" 
+                    value="shop" 
+                    checked={formData.location === 'shop'}
+                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    className="accent-yellow-400"
+                  />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white">At Shop</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="location" 
+                    value="home"
+                    checked={formData.location === 'home'}
+                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    className="accent-yellow-400"
+                  />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white">At Home</span>
+                </label>
+              </div>
+
               <div className="flex flex-col gap-1">
                 <label className="text-[8px] font-black uppercase tracking-widest opacity-50 ml-1">Full Name</label>
                 <input 

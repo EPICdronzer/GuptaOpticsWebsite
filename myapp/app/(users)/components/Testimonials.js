@@ -2,153 +2,138 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { generateStaticReviews } from './StaticReviewsData';
+import Link from 'next/link';
+import Script from 'next/script';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const Testimonials = () => {
+  const [useFallback, setUseFallback] = useState(false);
+  const [staticReviews, setStaticReviews] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
   const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const cardsRef = useRef(null);
+  const widgetRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(headingRef.current?.children ?? [],
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, stagger: 0.15, ease: 'power3.out',
-          scrollTrigger: { trigger: headingRef.current, start: 'top 85%' } }
-      );
-      gsap.fromTo(cardsRef.current?.children ?? [],
-        { y: 70, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, stagger: 0.2, ease: 'power3.out',
-          scrollTrigger: { trigger: cardsRef.current, start: 'top 80%' } }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
+    // Generate reviews on mount so random dates are fresh per refresh
+    setStaticReviews(generateStaticReviews(1000).slice(0, 15)); // Use a subset for the carousel
+    
+    // Check if Elfsight widget loads properly
+    const timer = setTimeout(() => {
+      if (widgetRef.current) {
+        // If the widget container is empty or very small, it likely failed to load (limit reached)
+        if (widgetRef.current.innerHTML.trim() === '' || widgetRef.current.clientHeight < 50) {
+          setUseFallback(true);
+        }
+      }
+    }, 4000); // Wait 4 seconds for Elfsight to load
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const reviews = [
-    {
-      id: 1,
-      name: 'RAHUL SHARMA',
-      location: 'SHASTRI NAGAR, DELHI',
-      date: '2 hafte pehle',
-      text: "Yaar, itne achhe sunglasses pehle kabhi nahi mile! Bahut halke aur stylish hain. Din bhar pehenta hoon, bilkul takleef nahi hoti. Eyconic ne kuch khaas hi banaaya hai.",
-      initials: 'RS'
-    },
-    {
-      id: 2,
-      name: 'PRIYA GUPTA',
-      location: 'SHASTRI NAGAR, DELHI',
-      date: '5 din pehle',
-      text: "Bhai, main toh fan ho gayi hoon! Meri saheli ne poochha kahan se liye, toh maine Eyconic ka naam bataya. Ab woh bhi khareedne wali hai. Quality ekdum first class hai!",
-      initials: 'PG'
-    },
-    {
-      id: 3,
-      name: 'AMIT VERMA',
-      location: 'SHASTRI NAGAR, DELHI',
-      date: '1 mahina pehle',
-      text: "Delhi ki garmi mein yeh sunglasses ne meri aankhein bachaa li! Design bhi top-notch hai aur price bhi reasonable. Shastri Nagar mein sab dost poochh rahe hain kahan se liye.",
-      initials: 'AV'
-    }
-  ];
-
+  // For the static fallback carousel
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
+    if (!useFallback) return;
     const interval = setInterval(() => {
       if (window.innerWidth < 768) {
-        nextSlide();
+        setActiveIndex((prev) => (prev + 1) % staticReviews.length);
       }
     }, 6000);
     return () => clearInterval(interval);
-  }, [activeIndex, mounted]);
+  }, [useFallback, staticReviews.length]);
 
-  const nextSlide = () => setActiveIndex((prev) => (prev + 1) % reviews.length);
-  const prevSlide = () => setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  const nextSlide = () => setActiveIndex((prev) => (prev + 1) % staticReviews.length);
+  const prevSlide = () => setActiveIndex((prev) => (prev - 1 + staticReviews.length) % staticReviews.length);
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#f8f8f8] px-12 md:px-32 lg:px-48 py-16 md:py-24 overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-[#f8f8f8] px-4 md:px-12 lg:px-32 py-16 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        {/* Header Section */}
-        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-          <div className="text-center md:text-left w-full md:w-auto">
-            <h2 className="text-4xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
-              OUR CUSTOMERS<br />
-              <span className="text-gray-300">ARE SAYING</span>
-            </h2>
-          </div>
-          
-          <div className="mt-8 md:mt-0 flex flex-col items-end gap-6">
-            <div className="flex gap-4">
-              <button 
-                onClick={prevSlide}
-                className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 group"
-              >
-                <span className="text-xl group-hover:-translate-x-1 transition-transform">←</span>
-              </button>
-              <button 
-                onClick={nextSlide}
-                className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 group"
-              >
-                <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-              </button>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-10 text-center md:text-left gap-6">
+          <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight">
+            Google Reviews
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <div className="flex items-center gap-2 font-bold text-lg">
+              <span>5.0</span>
+              <div className="flex text-yellow-400">
+                {[...Array(5)].map((_, i) => (
+                   <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                ))}
+              </div>
+              <span className="text-gray-500 font-normal text-sm ml-1">(1,000+)</span>
             </div>
-            <p className="text-gray-400 font-medium tracking-tight hidden md:block">
-              // Loved by thousands of<br />happy customers worldwide.
-            </p>
+            <Link href="/reviews" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition-colors whitespace-nowrap">
+              Review us on Google
+            </Link>
           </div>
         </div>
 
-        <div className="h-[1px] w-full bg-gray-200 mb-12 md:mb-16"></div>
+        {/* Global style to hide Elfsight arrows as requested */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .elfsight-app-aceca5ea-4cce-4583-a905-579dc33638c0 .eapps-widget-toolbar,
+          .elfsight-app-aceca5ea-4cce-4583-a905-579dc33638c0 [class*="Carousel__Arrow"] {
+            display: none !important;
+          }
+        `}} />
 
-        {/* Testimonial Cards */}
-        <div className="relative w-full">
-          <div ref={cardsRef} className="flex md:grid md:grid-cols-3 gap-8 transition-transform duration-700 ease-in-out"
-               style={{ transform: mounted && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 32}px))` : 'none' }}>
-            {reviews.map((review) => (
-              <div key={review.id} className="min-w-full md:min-w-0 bg-white p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-500 group border border-gray-50">
-                <div className="flex justify-between items-start mb-8">
-                  <span className="text-5xl font-serif text-gray-200 group-hover:text-yellow-400 transition-colors">“</span>
-                  <div className="flex gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        {!useFallback ? (
+          <div ref={widgetRef} className="w-full min-h-[250px] relative">
+            <Script src="https://elfsightcdn.com/platform.js" strategy="lazyOnload" />
+            <div className="elfsight-app-aceca5ea-4cce-4583-a905-579dc33638c0" data-elfsight-app-lazy></div>
+          </div>
+        ) : (
+          /* FALLBACK UI - Styled exactly like Google Reviews */
+          <div className="relative w-full overflow-hidden pb-10">
+            <div className="flex gap-6 transition-transform duration-500 ease-in-out"
+                 style={{ transform: typeof window !== 'undefined' && window.innerWidth < 768 ? `translateX(calc(-${activeIndex * 100}% - ${activeIndex * 24}px))` : 'none' }}>
+              
+              {staticReviews.map((review) => (
+                <div key={review.id} className="min-w-full md:min-w-[320px] max-w-[320px] bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex-shrink-0">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-medium text-lg">
+                      {review.initials}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-sm">{review.name}</h4>
+                      <p className="text-gray-500 text-xs">{review.date}</p>
+                    </div>
+                    <div className="ml-auto">
+                      <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/>
                       </svg>
+                    </div>
+                  </div>
+                  <div className="flex text-yellow-400 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className={`w-4 h-4 fill-current ${i >= review.rating ? 'text-gray-300' : ''}`} viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                     ))}
                   </div>
+                  <p className="text-gray-700 text-sm leading-snug line-clamp-4">
+                    {review.text}
+                  </p>
                 </div>
+              ))}
+            </div>
 
-                <p className="text-gray-600 font-bold leading-relaxed mb-10 min-h-[100px] text-sm uppercase tracking-wide">
-                  &quot;{review.text}&quot;
-                </p>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-black text-gray-300 border border-gray-200 group-hover:bg-black group-hover:text-white transition-all duration-300 text-xs">
-                    {review.initials}
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-black uppercase tracking-tight">{review.name}</h4>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{review.location}</p>
-                    <p className="text-[10px] text-gray-300 font-black uppercase tracking-widest">{review.date}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {/* Mobile Fallback Navigation Dots */}
+            <div className="flex justify-center gap-2 mt-6 md:hidden">
+              {staticReviews.map((_, i) => (
+                <div key={i} className={`w-2 h-2 rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-blue-600 w-4' : 'bg-gray-300'}`}></div>
+              ))}
+            </div>
+            
+            {/* Desktop Arrows */}
+            <div className="hidden md:flex justify-end gap-3 mt-6">
+               <button onClick={prevSlide} className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+               </button>
+               <button onClick={nextSlide} className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+               </button>
+            </div>
           </div>
-          
-          {/* Mobile Dots */}
-          <div className="flex justify-center gap-2 mt-10 md:hidden">
-            {reviews.map((_, i) => (
-              <div key={i} className={`w-2 h-2 rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-black w-4' : 'bg-gray-200'}`}></div>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

@@ -9,7 +9,11 @@ const OrderSchema = new mongoose.Schema({
     price: { type: Number },
     quantity: { type: Number },
     color: { type: String },
-    size: { type: String }
+    size: { type: String },
+    prescription: {
+      type: mongoose.Schema.Types.Mixed, 
+      default: null
+    }
   }],
   totalAmount: { type: Number, required: true },
   status: { type: String, enum: ['pending', 'processing', 'shipped', 'delivered'], default: 'pending' },

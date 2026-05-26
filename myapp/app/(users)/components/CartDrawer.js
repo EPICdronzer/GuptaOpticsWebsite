@@ -47,7 +47,15 @@ const CartDrawer = () => {
       await createOrder(orderData);
 
       // 2. Prepare WhatsApp Message
-      const itemsList = cartItems.map(item => `* ${item.name} (${item.color}/${item.size}) x${item.quantity} - ${item.price}`).join('\n');
+      const itemsList = cartItems.map(item => {
+        let text = `* ${item.name} (${item.color}/${item.size}) x${item.quantity} - ${item.price}`;
+        if (item.prescription) {
+          text += `\n  Prescription:`;
+          text += `\n  RE(OD): SPH ${item.prescription.re.sph}, CYL ${item.prescription.re.cyl}, AXIS ${item.prescription.re.axis}, ADD ${item.prescription.re.add}`;
+          text += `\n  LE(OS): SPH ${item.prescription.le.sph}, CYL ${item.prescription.le.cyl}, AXIS ${item.prescription.le.axis}, ADD ${item.prescription.le.add}`;
+        }
+        return text;
+      }).join('\n');
       
       const message = `Hello Optical Galaxy! I would like to place an order:
 

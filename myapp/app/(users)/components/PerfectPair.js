@@ -46,7 +46,7 @@ const PerfectPair = () => {
     {
       id: 3,
       title: 'CLASSIC EVERYDAY SHADES',
-      video: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-new-glasses-41616-large.mp4',
+      video: '/optician-test.mp4',
       bg: 'bg-[#ffcc00]',
       description: '// Indias finest craftsmanship combined with AI testing protocols. Experience the future of optometry with custom lenses engineered for unmatched visual clarity and comfort.',
       tilt: 'rotate-3'
