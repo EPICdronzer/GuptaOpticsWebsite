@@ -19,8 +19,6 @@ export const siteConfig = {
   social: {
     instagram: "https://www.instagram.com/opticalgalaxy_theog",
     facebook: "https://www.facebook.com/Opticalgalaxy2012/",
-    twitter: "https://twitter.com/Opticalgalaxy",
-    linkedin: "https://linkedin.com/company/Opticalgalaxy",
     threads: "https://www.threads.com/@opticalgalaxy_theog"
   },
   links: {

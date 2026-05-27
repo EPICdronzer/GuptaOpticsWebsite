@@ -32,12 +32,7 @@ export const metadata = {
     locale: "en_IN",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Optical Galaxy & Gupta Optics | Premium Eyewear",
-    description: "Premium eyeglasses, sunglasses, and contact lenses with advanced AI diagnostics in Shastri Nagar, Delhi.",
-    images: ["/shop-front.png"],
-  }
+  
 };
 
 export default function RootLayout({ children }) {
