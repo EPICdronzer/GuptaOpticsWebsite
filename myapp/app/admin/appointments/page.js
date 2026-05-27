@@ -45,7 +45,8 @@ const AdminAppointmentsPage = () => {
   }
 
   const filteredAppointments = appointments.filter((apt) => 
-    apt.name.toLowerCase().includes(searchQuery.toLowerCase())
+    apt.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (apt.phone && apt.phone.includes(searchQuery))
   );
 
   const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage);
@@ -133,6 +134,7 @@ const AdminAppointmentsPage = () => {
             <thead>
               <tr className="border-b border-white/10 bg-white/5">
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Customer</th>
+                <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Phone</th>
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Location</th>
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Date</th>
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Status</th>
@@ -147,13 +149,11 @@ const AdminAppointmentsPage = () => {
                 
                 return (
                   <tr key={apt._id} className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                    <td className="p-6">
-                      <div className="flex flex-col">
-                        <span className="font-black uppercase text-sm">{apt.name}</span>
-                        {apt.phone && (
-                          <span className="text-[10px] opacity-50 tracking-widest font-semibold mt-0.5">📞 {apt.phone}</span>
-                        )}
-                      </div>
+                    <td className="p-6 font-black uppercase text-sm">
+                      {apt.name}
+                    </td>
+                    <td className="p-6 text-sm font-semibold tracking-wider text-white/80">
+                      {apt.phone ? `📞 ${apt.phone}` : '—'}
                     </td>
                     <td className="p-6">
                       <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${
