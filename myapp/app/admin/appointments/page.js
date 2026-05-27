@@ -81,7 +81,15 @@ const AdminAppointmentsPage = () => {
             return (
               <div key={`mobile-${apt._id}`} className="p-5 flex flex-col gap-4 hover:bg-white/5 transition-colors">
                 <div className="flex justify-between items-start">
-                  <div className="font-black uppercase text-sm">{apt.name}</div>
+                  <div className="flex flex-col gap-1">
+                    <div className="font-black uppercase text-sm">{apt.name}</div>
+                    {apt.phone && (
+                      <div className="text-[10px] opacity-60 font-semibold tracking-widest">📞 {apt.phone}</div>
+                    )}
+                    <div className="text-[10px] font-black uppercase tracking-wider text-yellow-400">
+                      {apt.location === 'home' ? '🏠 At Home' : '🏪 At Shop'}
+                    </div>
+                  </div>
                   <div className="text-xs opacity-60 text-right">{new Date(apt.date).toLocaleDateString()}</div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -125,6 +133,7 @@ const AdminAppointmentsPage = () => {
             <thead>
               <tr className="border-b border-white/10 bg-white/5">
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Customer</th>
+                <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Location</th>
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Date</th>
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Status</th>
                 <th className="p-6 text-xs sm:text-sm font-black uppercase tracking-widest opacity-60">Action</th>
@@ -138,8 +147,22 @@ const AdminAppointmentsPage = () => {
                 
                 return (
                   <tr key={apt._id} className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                    <td className="p-6 font-black uppercase text-sm">
-                      {apt.name}
+                    <td className="p-6">
+                      <div className="flex flex-col">
+                        <span className="font-black uppercase text-sm">{apt.name}</span>
+                        {apt.phone && (
+                          <span className="text-[10px] opacity-50 tracking-widest font-semibold mt-0.5">📞 {apt.phone}</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-6">
+                      <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${
+                        apt.location === 'home' 
+                          ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' 
+                          : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                      }`}>
+                        {apt.location === 'home' ? '🏠 At Home' : '🏪 At Shop'}
+                      </span>
                     </td>
                     <td className="p-6 text-sm opacity-60">{new Date(apt.date).toLocaleDateString()}</td>
                     <td className="p-6">

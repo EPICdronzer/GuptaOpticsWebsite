@@ -5,7 +5,7 @@ import { siteConfig } from '../../config';
 import { createAppointment } from '../../../actions/clientActions';
 
 const Hero = () => {
-  const [formData, setFormData] = useState({ name: '', date: '', location: 'shop' });
+  const [formData, setFormData] = useState({ name: '', phone: '', date: '', location: 'shop' });
   const [minDate, setMinDate] = useState('');
   const heroRef = useRef(null);
   const titleRef = useRef(null);
@@ -55,10 +55,21 @@ const Hero = () => {
 
   const handleBooking = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.date) return;
+    if (!formData.name || !formData.phone || !formData.date) return;
+    
+    // Phone number validation: exactly 10 digits
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      alert('Phone number must be exactly 10 digits (numbers only).');
+      return;
+    }
     
     // 1. Save to Backend
-    await createAppointment(formData);
+    const res = await createAppointment(formData);
+    if (!res.success) {
+      alert(res.error || 'Failed to save appointment');
+      return;
+    }
 
     // 2. Prepare WhatsApp Redirect
     const formattedDate = new Date(formData.date).toLocaleDateString('en-GB', {
@@ -73,6 +84,7 @@ const Hero = () => {
     const message = `Hello Optical Galaxy! I would like to book an eye test appointment.
     
 Name: ${formData.name}
+Phone: ${formData.phone}
 Preferred Date: ${formattedDate}
 Location: ${locationText}`;
 
@@ -135,6 +147,24 @@ Location: ${locationText}`;
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="bg-white/5 border border-white/20 px-4 py-3 rounded-lg text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-yellow-400 transition-colors placeholder:text-white/40 text-white w-full"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[8px] font-black uppercase tracking-widest opacity-50 ml-1">Phone Number</label>
+                <input 
+                  type="tel" 
+                  placeholder="10 DIGIT NUMBER"
+                  required
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  value={formData.phone}
+                  onChange={(e) => {
+                    // Only accept digits
+                    const val = e.target.value.replace(/\D/g, '');
+                    setFormData({...formData, phone: val});
+                  }}
                   className="bg-white/5 border border-white/20 px-4 py-3 rounded-lg text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-yellow-400 transition-colors placeholder:text-white/40 text-white w-full"
                 />
               </div>

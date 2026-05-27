@@ -6,9 +6,17 @@ import Order from '../models/Order';
 export async function createAppointment(data) {
   await dbConnect();
   try {
+    // Phone number validation: exactly 10 digits
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!data.phone || !phoneRegex.test(data.phone)) {
+      return { success: false, error: 'Phone number must be exactly 10 digits.' };
+    }
+
     const appointment = await Appointment.create({
       name: data.name,
+      phone: data.phone,
       date: new Date(data.date),
+      location: data.location || 'shop',
       whatsappSent: true
     });
     return { success: true, id: appointment._id.toString() };
