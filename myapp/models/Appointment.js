@@ -10,4 +10,9 @@ const AppointmentSchema = new mongoose.Schema({
   notes: { type: String },
 }, { timestamps: true });
 
+// Force clear cached model in development to prevent Mongoose schema hot-reload cache bugs
+if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
+  delete mongoose.models.Appointment;
+}
+
 export default mongoose.models.Appointment || mongoose.model('Appointment', AppointmentSchema);
