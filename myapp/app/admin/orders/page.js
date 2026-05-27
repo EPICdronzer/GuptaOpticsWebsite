@@ -65,12 +65,50 @@ const AdminOrdersPage = () => {
               )}
               <span className="text-[10px] font-black uppercase tracking-[0.2em] bg-white/10 px-2 py-0.5 rounded">ID: {order._id.slice(-6)}</span>
             </div>
-            <div className="flex gap-4 flex-wrap">
-              {order.items.map((item, idx) => (
-                <span key={idx} className="text-xs opacity-50 uppercase tracking-widest">
-                  {item.name} {item.color && item.size ? `(${item.color}/${item.size})` : ''} x{item.quantity}
-                </span>
-              ))}
+            <div className="flex flex-col gap-3 mt-4 w-full">
+              {order.items.map((item, idx) => {
+                const hasPresc = item.prescription && 
+                  ((item.prescription.re && (item.prescription.re.sph || item.prescription.re.cyl || item.prescription.re.axis || item.prescription.re.add)) ||
+                   (item.prescription.le && (item.prescription.le.sph || item.prescription.le.cyl || item.prescription.le.axis || item.prescription.le.add)));
+                
+                return (
+                  <div key={idx} className="flex flex-col gap-2 bg-white/5 border border-white/5 p-4 rounded-xl">
+                    <div className="flex justify-between items-center flex-wrap gap-2">
+                      <span className="text-xs font-black uppercase tracking-wider text-white">
+                        {item.name} {item.color || item.size ? `(${item.color || ''}/${item.size || ''})` : ''}
+                      </span>
+                      <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded font-black text-white/70">
+                        QTY: {item.quantity}
+                      </span>
+                    </div>
+                    
+                    {hasPresc && (
+                      <div className="mt-1 bg-black/40 border border-white/10 p-3 rounded-lg grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Right Eye */}
+                        <div className="flex flex-col gap-1">
+                          <span className="text-[9px] font-black uppercase tracking-widest text-yellow-400 border-b border-white/10 pb-1">👁️ Right Eye (OD)</span>
+                          <div className="grid grid-cols-4 gap-1 text-[10px] text-white/80 font-mono text-center">
+                            <div><span className="opacity-40 text-[8px] block font-sans">SPH</span>{item.prescription.re?.sph || '—'}</div>
+                            <div><span className="opacity-40 text-[8px] block font-sans">CYL</span>{item.prescription.re?.cyl || '—'}</div>
+                            <div><span className="opacity-40 text-[8px] block font-sans">AXIS</span>{item.prescription.re?.axis || '—'}</div>
+                            <div><span className="opacity-40 text-[8px] block font-sans">ADD</span>{item.prescription.re?.add || '—'}</div>
+                          </div>
+                        </div>
+                        {/* Left Eye */}
+                        <div className="flex flex-col gap-1">
+                          <span className="text-[9px] font-black uppercase tracking-widest text-yellow-400 border-b border-white/10 pb-1">👁️ Left Eye (OS)</span>
+                          <div className="grid grid-cols-4 gap-1 text-[10px] text-white/80 font-mono text-center">
+                            <div><span className="opacity-40 text-[8px] block font-sans">SPH</span>{item.prescription.le?.sph || '—'}</div>
+                            <div><span className="opacity-40 text-[8px] block font-sans">CYL</span>{item.prescription.le?.cyl || '—'}</div>
+                            <div><span className="opacity-40 text-[8px] block font-sans">AXIS</span>{item.prescription.le?.axis || '—'}</div>
+                            <div><span className="opacity-40 text-[8px] block font-sans">ADD</span>{item.prescription.le?.add || '—'}</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="text-left md:text-right w-full md:w-auto flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end gap-4 border-t border-white/5 md:border-0 pt-4 md:pt-0">

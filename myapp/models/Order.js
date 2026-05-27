@@ -20,4 +20,9 @@ const OrderSchema = new mongoose.Schema({
   whatsappRedirected: { type: Boolean, default: true },
 }, { timestamps: true });
 
+// Force clear cached model in development to prevent Mongoose schema hot-reload cache bugs
+if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
+  delete mongoose.models.Order;
+}
+
 export default mongoose.models.Order || mongoose.model('Order', OrderSchema);
