@@ -93,14 +93,14 @@ Location: ${locationText}`;
   };
 
   return (
-    <section ref={heroRef} className="relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black">
+    <section ref={heroRef} className="relative w-full min-h-screen md:h-screen overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-24 lg:px-48 text-white font-sans selection:bg-yellow-400 selection:text-black ">
       {/* Sticky Background Image */}
       <div 
         className="absolute inset-0 z-0 bg-[url('/hero-bg.png')] bg-cover bg-center bg-scroll md:bg-fixed"
         aria-hidden="true"
       ></div>
       
-      <div className="relative z-10 flex flex-col justify-between h-full pt-12 md:pt-24 lg:pt-32">
+      <div className="relative z-10 flex flex-col justify-between md:h-full pt-12 md:pt-12 lg:pt-16">
         {/* Top Section: Title and Form */}
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start text-center lg:text-left">
           <div ref={titleRef} className="title-container max-w-2xl">
@@ -193,9 +193,9 @@ Location: ${locationText}`;
         </div>
 
         {/* Center/Bottom Content */}
-        <div ref={bottomRef} className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8 lg:gap-12 pb-6 md:pb-8 lg:pb-12 text-center md:text-left">
+        <div ref={bottomRef} className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8 lg:gap-12 pb-12 mt-8 md:mt-0 md:pb-12 lg:pb-8 text-center md:text-left">
           {/* CTA Buttons */}
-          <div className="flex flex-col md:flex-row items-center gap-3 order-1 md:order-2 w-full md:w-auto mt-4 md:mt-0">
+          <div className="flex flex-col md:flex-row items-center gap-3 order-1 md:order-2 w-full md:w-auto mt-4 md:mt-0 ">
             {/* Locate Us Button */}
             <a 
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('A-187, Main Market, near Shastri Budh Park, Shastri Nagar, New Delhi, Delhi 110052')}`} 
@@ -230,7 +230,7 @@ Location: ${locationText}`;
 
           {/* Description */}
           <div className="max-w-xs order-2 md:order-1 mt-4 md:mt-0">
-            <p className="text-[11px] md:text-xl font-black uppercase leading-tight opacity-90 tracking-[0.1em]">
+            <p className="text-[11px] md:text-xl font-black uppercase leading-tight opacity-90 tracking-[0.1em] ">
               Cool glasses that blend<br className="hidden md:block" /> style and comfort for all.
             </p>
           </div>
